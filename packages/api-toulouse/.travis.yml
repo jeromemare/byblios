@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- '10'
+deploy:
+  provider: npm
+  email: m.enochroot@gmail.com
+  api_key:
+    secure: QjeJmEZVXF1lNKrCiUMrNEu6VIbGirnj6iU6/0bo7ApF2z8gsj646b96ATBeykU3lAWCs6mdctxwsg3l7UcPm4tcObhyLpOqvdyj5+/5qp0ssBFEzuSL3fWQSxcfV6ELFdx4uJQQ6i1/nPqL7bJ33MKaRBmH7XjQ7tunjFOycj555/h+jqfK/iKAIHZe8C0ucotwFdeILekh6kdZ3a8ror3S+RB4etRq8DmyurMdrcqmHNTWDa5DONMtXjncvaXAVkilHZMnaRwGYQ2XIarOcpVnbPalEbklKGTLmnsrt96nyayP9aDt2y8wQx1fmcMc1P/VPoU2Te3uLFRMrO8aNL/GQSu9KIWXYGyF57hwu4sT5lBcQcgIlpC9Z3VmBuogNOqVNmkWQjZ+u8uoobE/oTIIDtPHZ7QpB2Wc8evzBUQgeJAALNHsqe7pQVGHiaMRXjwbGiF6Mrjj8J1AYTeR6Ah/yug3ZSgdzCz1dbeMs/rSEm1bqWJjBtLDWBG2pgB8dkpn+gFv4gYp0cCu6tj4v0pjuZL1TaMa7YMJtEdG8zlkdIAdz1baX5b/GwLc8k04T1bCQmWfmmdX8rIbV5AKFOU5FjSlNJNwKfT9Xnq69qVbHa7rrHpoX5l8CSQw+9WhbfQfB4VFA+SOyXmQJK8fcdaze0NUH9YSmQCXVhTVVz8=
+  on:
+    tags: true
+    repo: m-enochroot/bibtou-api

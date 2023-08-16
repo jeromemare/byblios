@@ -1,0 +1,63 @@
+{
+  "name": "@byblios/cli",
+  "version": "1.0.0",
+  "description": "Byblios cli",
+  "author": "Jerome Mare <jerome.mare@gmail.com>",
+  "bin": {
+    "byblios": "./bin/run"
+  },
+  "homepage": "https://github.com/packages/cli",
+  "license": "MIT",
+  "main": "src/index.js",
+  "repository": "packages/cli",
+  "files": [
+    "/bin",
+    "/src",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "dependencies": {
+    "@oclif/core": "^2",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^3.2.0"
+  },
+  "devDependencies": {
+    "@oclif/test": "^2.4.4",
+    "chai": "^4",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^4",
+    "mocha": "^9",
+    "oclif": "^3.11.3",
+    "shx": "^0.3.3"
+  },
+  "oclif": {
+    "bin": "byblios",
+    "dirname": "byblios",
+    "commands": "./src/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "search": {
+        "description": "Recherche"
+      }
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --ext .js --config .eslintrc",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.js\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "bugs": "https://github.com/packages/cli/issues",
+  "keywords": [
+    "oclif"
+  ]
+}

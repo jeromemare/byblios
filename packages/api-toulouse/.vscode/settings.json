@@ -1,0 +1,36 @@
+{
+  // "javascript.implicitProjectConfig.checkJs": true,
+
+  "editor.tabSize": 2,
+  "editor.rulers": [
+    80,
+    100
+  ],
+
+  "javascript.format.enable": false,
+
+  "editor.formatOnSave": false,
+  "vetur.validation.template": false,
+
+  "eslint.enable": true, //Enable eslint
+
+  "eslint.options": {
+    "extensions": [ //List of file extensions to activate eslint
+      ".html",
+      ".js"
+    ]
+  },
+
+  // Run the linter on save (onSave) or on type (onType)
+  "eslint.run": "onSave",
+
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#8e8572",
+    "statusBarItem.hoverBackground": "#726b5b",
+    "statusBar.foreground": "#15202b"
+  },
+  "peacock.color": "#8e8572",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}

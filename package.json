@@ -1,0 +1,15 @@
+{
+  "name": "@byblios/byblios",
+  "version": "2.0.0",
+  "description": "Outil de consultation de bibliothèque",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jérôme Mare<jerome.mare@gmail.com>",
+  "license": "ISC",
+  "workspaces": ["./packages/*"],
+  "volta": {
+    "node": "20.5.1"
+  }
+}
