@@ -4,7 +4,6 @@ require('dotenv-flow').config()
 const analyze = !!process.env.ANALYZE_BUILD
 const cordovaId = process.env.CORDOVA_ID || 'com.gsmll.byblios.app'
 const users = process.env.USERS
-console.log(users)
 
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
