@@ -32,7 +32,7 @@
     "axios-debug-log": "^0.6.2",
     "blend-promise-utils": "^1.24.1",
     "chalk": "^2.4.2",
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.12",
     "cheerio-tableparser": "^1.0.1",
     "commander": "^4.1.0",
     "date-fns": "^2.4.1",
