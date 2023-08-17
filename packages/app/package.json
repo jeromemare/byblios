@@ -1,6 +1,6 @@
 {
   "name": "@byblios/app",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "Application de recherche de livre et de gestion des emprunts pour les bibliothèques",
   "productName": "Byblios",
   "author": "Jerome Mare <jerome.mare@gmail.com>",
@@ -10,6 +10,7 @@
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
+    "build:android:debug": "quasar build -m android -d && node scripts/package-android.js",
     "build": "quasar build"
   },
   "dependencies": {
@@ -40,8 +41,11 @@
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^9.0.0",
+    "fs-extra": "^11.1.1",
     "postcss": "^8.4.14",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "simple-git": "^3.19.1",
+    "xml2json": "^0.12.0"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",
