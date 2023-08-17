@@ -59,7 +59,3 @@ export function printDocuments(documents) {
   const documentList = _.castArray(documents)
   documentList.forEach(document => printDocument(document))
 }
-
-export default {
-  printDocuments,
-}

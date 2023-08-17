@@ -10,7 +10,6 @@ import _ from 'lodash'
 
 import { getResults, prepare, prepareAdvanced, search } from './search-service'
 import { setBibHost, getBibHost, getSession } from './generic-service'
-import { printDocuments } from './documents-service'
 import { requestHtmlPage } from './utils'
 
 const log = debug('bibtou:borrow')
@@ -330,13 +329,12 @@ export async function renewDocuments(documents) {
   return mapSeries(documentsByUsers, renewDocumentsForUser)
 }
 
-export { setBibHost, printDocuments, getResults, prepare, prepareAdvanced, search }
+export { setBibHost, getResults, prepare, prepareAdvanced, search }
 
 export default {
   setBibHost,
   getAccountDetails,
   renewDocuments,
-  printDocuments,
   getResults,
   prepare,
   prepareAdvanced,
