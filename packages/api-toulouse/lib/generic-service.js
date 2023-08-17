@@ -21,9 +21,7 @@ export async function getSession() {
   log(`Get homepage ${url}`)
   try {
     const homeResponse = await axios.get(url)
-    console.log('-', { cheerio })
     const $ = cheerio.load(homeResponse.data)
-    console.log('--', $)
     const loginFormUrl = $('form[name=loginWN]').attr('action')
     if (!loginFormUrl) {
       throw new Error('Impossible de trouver le code de session')
