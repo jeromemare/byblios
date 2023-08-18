@@ -15,7 +15,7 @@ import mockData from "../../data/mockData.json";
 import addDays from "date-fns/addDays";
 
 async function renewDocuments(documents) {
-  if (!Platform.is.cordova) {
+  if (!Platform.is.nativeMobile) {
     setBibHost("/bib");
   }
 
@@ -23,7 +23,7 @@ async function renewDocuments(documents) {
 }
 
 async function getAccountDetailsForUser(user) {
-  if (!Platform.is.cordova) {
+  if (!Platform.is.nativeMobile) {
     setBibHost("/bib");
   }
 
@@ -31,7 +31,7 @@ async function getAccountDetailsForUser(user) {
 }
 
 async function search(term, limit = 10) {
-  if (!Platform.is.cordova) {
+  if (!Platform.is.nativeMobile) {
     setBibHost("/bib");
   }
 
@@ -39,7 +39,7 @@ async function search(term, limit = 10) {
 }
 
 async function prepare(term) {
-  if (!Platform.is.cordova) {
+  if (!Platform.is.nativeMobile) {
     setBibHost("/bib");
   }
 
@@ -47,7 +47,7 @@ async function prepare(term) {
 }
 
 async function prepareAdvanced(query) {
-  if (!Platform.is.cordova) {
+  if (!Platform.is.nativeMobile) {
     setBibHost("/bib");
   }
 

@@ -39,7 +39,7 @@ export default {
     if (image) {
       this.imageEncoded = image;
     } else {
-      const url = Platform.is.cordova
+      const url = Platform.is.nativeMobile
         ? this.url
         : this.url.replace(
             "http://images.titelive.com/",

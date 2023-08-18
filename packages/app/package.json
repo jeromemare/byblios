@@ -11,6 +11,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build:android:debug": "quasar build -m android -d && node scripts/package-android.js",
+    "build:capacitor": "quasar build -m capacitor -T android",
     "build": "quasar build"
   },
   "dependencies": {

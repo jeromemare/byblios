@@ -1,0 +1,13 @@
+{
+  "name": "@byblios/app",
+  "version": "2.0.0",
+  "description": "Application de recherche de livre et de gestion des emprunts pour les bibliothèques",
+  "author": "Jerome Mare <jerome.mare@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^5.2.3",
+    "@capacitor/app": "^5.0.0",
+    "@capacitor/cli": "^5.0.0",
+    "@capacitor/core": "^5.0.0"
+  }
+}
