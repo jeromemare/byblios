@@ -6,6 +6,7 @@
         <q-toolbar-title>
           <span class="app-title">{{ appTitle }}</span>
         </q-toolbar-title>
+        <q-btn flat round dense icon="search" @click="openSearch" />
       </q-toolbar>
     </q-header>
 
@@ -53,6 +54,9 @@
         />
       </q-tabs>
     </q-footer>
+    <q-dialog v-model="isSearchOpened">
+      <search-form />
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -62,15 +66,18 @@ import { mapState, mapActions } from "pinia";
 import { useApiStore } from "../stores/api-store";
 
 import SidebarPanel from "src/components/SidebarPanel.vue";
+import SearchForm from "src/components/SearchForm.vue";
 
 export default {
   name: "MyLayout",
   components: {
     SidebarPanel,
+    SearchForm,
   },
   data() {
     return {
       tab: "",
+      isSearchOpened: false,
     };
   },
   computed: {
@@ -101,6 +108,11 @@ export default {
       return this.haveLateDocuments || this.haveBorrowWarningBooks;
     },
   },
+  methods: {
+    openSearch() {
+      this.isSearchOpened = true;
+    },
+  }
 };
 </script>
 

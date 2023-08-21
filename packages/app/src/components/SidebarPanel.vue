@@ -54,25 +54,11 @@
         @click="openDebugPanel"
       />
     </div>
-    <div class="sidebar-item">
-      <q-btn
-        flat
-        round
-        icon="fas fa-search"
-        color="accent"
-        size="md"
-        class="fa-q-item"
-        @click="openSearch"
-      />
-    </div>
     <q-dialog v-model="newAccountOpened">
       <new-account-form />
     </q-dialog>
     <q-dialog v-model="isDevelopperPanelOpened">
       <developper-panel />
-    </q-dialog>
-    <q-dialog v-model="isSearchOpened">
-      <search-form />
     </q-dialog>
   </div>
 </template>
@@ -85,7 +71,6 @@ import { useApiStore } from "../stores/api-store";
 import DevelopperPanel from "src/components/DevelopperPanel.vue";
 import AccountAvatar from "src/components/AccountAvatar.vue";
 import NewAccountForm from "src/components/NewAccountForm.vue";
-import SearchForm from "src/components/SearchForm.vue";
 
 export default {
   name: "SidebarPanel",
@@ -93,7 +78,6 @@ export default {
     DevelopperPanel,
     AccountAvatar,
     NewAccountForm,
-    SearchForm,
   },
   props: {
     detailMode: {
@@ -105,7 +89,6 @@ export default {
     return {
       newAccountOpened: false,
       isDevelopperPanelOpened: false,
-      isSearchOpened: false,
     };
   },
   computed: {
@@ -123,9 +106,6 @@ export default {
     },
     openDebugPanel() {
       this.isDevelopperPanelOpened = true;
-    },
-    openSearch() {
-      this.isSearchOpened = true;
     },
     filterByUser(user) {
       this.filterUser(user.id);
