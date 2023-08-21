@@ -2,7 +2,7 @@
   <q-layout view="hHr Lpr fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat round dense icon="menu" @click="toggleSidebar" />
+        <q-btn flat round dense icon="menu" />
         <q-toolbar-title>
           <span class="app-title">{{ appTitle }}</span>
         </q-toolbar-title>
@@ -11,7 +11,7 @@
 
     <q-page-container>
       <div class="wrapper">
-        <div v-if="isSidebarVisible" class="sidebar">
+        <div class="sidebar">
           <sidebar-panel class="sidebar-wrapper" />
         </div>
         <div class="content">
@@ -60,7 +60,6 @@
 import { mapState, mapActions } from "pinia";
 
 import { useApiStore } from "../stores/api-store";
-import { useLayoutStore } from "../stores/layout-store";
 
 import SidebarPanel from "src/components/SidebarPanel.vue";
 
@@ -84,7 +83,6 @@ export default {
       "haveBorrowWarningBooks",
       "haveLateDocuments",
     ]),
-    ...mapState(useLayoutStore, ["isSidebarVisible"]),
     appTitle() {
       return "b\u03B3blio\u03C2";
     },
@@ -102,9 +100,6 @@ export default {
     hasBorrowStatus() {
       return this.haveLateDocuments || this.haveBorrowWarningBooks;
     },
-  },
-  methods: {
-    ...mapActions(useLayoutStore, ["toggleSidebar"]),
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <div v-if="borrowedBooksCount === 0" class="center-content">
       Aucun emprunt
     </div>
-    <q-scroll-area :style="pageWidth">
+    <q-scroll-area style="width: calc(100vw - 55px);">
       <div class="q-pa-md">
         <q-list separator>
           <article-item
@@ -57,7 +57,6 @@
 import { mapState, mapActions } from "pinia";
 
 import { useApiStore } from "../stores/api-store";
-import { useLayoutStore } from "../stores/layout-store";
 
 import { parseISO, compareAsc } from "date-fns";
 
@@ -84,7 +83,6 @@ export default {
       "isUpdateInProgress",
       "documentsToRenewCount",
     ]),
-    ...mapState(useLayoutStore, ["pageWidth"]),
     nbDocumentsToRenewLabel() {
       return simplur`${this.documentsToRenewCount} document[|s]`;
     },

@@ -3,7 +3,7 @@
     <div v-if="reservedBooksCount === 0" class="center-content">
       Aucune réservation
     </div>
-    <q-scroll-area :style="pageWidth">
+    <q-scroll-area style="width: calc(100vw - 55px);">
       <div class="q-pa-md">
         <q-list separator class="full-width">
           <q-item-label v-if="availableReservedBooksCount > 0" header>
@@ -32,7 +32,6 @@
 import { mapState } from "pinia";
 
 import { useApiStore } from "../stores/api-store";
-import { useLayoutStore } from "../stores/layout-store";
 
 import ReservationItem from "src/components/ReservationItem.vue";
 
@@ -49,7 +48,6 @@ export default {
       "unavailableReservedBooksCount",
       "reservedBooksCount",
     ]),
-    ...mapState(useLayoutStore, ["pageWidth"]),
   },
 };
 </script>
