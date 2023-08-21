@@ -1,8 +1,6 @@
 import debug from 'debug'
-import axios from 'axios'
 import * as cheerio from 'cheerio'
 import cheerioTableparser from 'cheerio-tableparser'
-import { stringify } from 'querystring'
 
 import { mapSeries } from 'blend-promise-utils'
 import { parse } from 'date-fns'
@@ -30,7 +28,7 @@ async function getAccountHtmlPage(session, user) {
   const config = {
     method: 'POST',
     url: `${bibHost}${session}`,
-    data: stringify(requestBody),
+    data: requestBody,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -42,42 +40,46 @@ async function getAccountHtmlPage(session, user) {
 function createBookListFromHtmlTable(tableData) {
   const cleanTable = tableData.slice(1).map(list => list.slice(1))
   console.log('--', { cleanTable })
-  return cleanTable.length > 0
-    ? cleanTable[0].map((titre, index) => {
-        const renewalText = cleanTable[7][index].split('\n')
-        const [nbRenewal, dateRenewal = ''] = renewalText.map(text => text.trim())
-        return {
-          titre,
-          auteur: cleanTable[1][index],
-          code: cleanTable[2][index],
-          type: cleanTable[3][index],
-          emprunte: cleanTable[4][index],
-          rendre: parse(cleanTable[5][index].trim(), 'd/M/yyyy,HH:mm', new Date()),
-          retard: cleanTable[6][index],
-          renewal: {
-            count: nbRenewal || 0,
-            date: dateRenewal,
-          },
-        }
-      })
-    : []
+  if (cleanTable.length > 0) {
+    return cleanTable[0].map((titre, index) => {
+      const renewalText = cleanTable[7][index].split('\n')
+      const [nbRenewal, dateRenewal = ''] = renewalText.map(text => text.trim())
+      return {
+        titre,
+        auteur: cleanTable[1][index],
+        code: cleanTable[2][index],
+        type: cleanTable[3][index],
+        emprunte: cleanTable[4][index],
+        rendre: parse(cleanTable[5][index].trim(), 'd/M/yyyy,HH:mm', new Date()),
+        retard: cleanTable[6][index],
+        renewal: {
+          count: nbRenewal || 0,
+          date: dateRenewal,
+        },
+      }
+    })
+  }
+
+  return []
 }
 
 function createReservedBookListFromHtmlTable(tableData) {
   const cleanTable = tableData.slice(1).map(list => list.slice(1))
 
-  return cleanTable.length > 0
-    ? cleanTable[0].map((titre, index) => {
-        const dateSince = cleanTable[4][index]
-        const since = dateSince !== '' ? parse(dateSince.trim(), 'd/M/yyyy', new Date()) : undefined
-        return {
-          titre,
-          auteur: cleanTable[1][index],
-          where: cleanTable[2][index],
-          since,
-        }
-      })
-    : []
+  if (cleanTable.length > 0) {
+    return cleanTable[0].map((titre, index) => {
+      const dateSince = cleanTable[4][index]
+      const since = dateSince !== '' ? parse(dateSince.trim(), 'd/M/yyyy', new Date()) : undefined
+      return {
+        titre,
+        auteur: cleanTable[1][index],
+        where: cleanTable[2][index],
+        since,
+      }
+    })
+  }
+
+  return []
 }
 
 function getAccountRealName(html) {
@@ -188,10 +190,12 @@ async function disconnect(session) {
   const bibHost = getBibHost()
   const logoutUrl = `${bibHost}/web2/tramp2.exe/log_out/${session}`
   log(`Disconnect user: ${logoutUrl}`)
-  let lougoutResponse
   try {
-    lougoutResponse = await axios.get(logoutUrl)
-    return lougoutResponse.data
+    const logoutPage = await requestHtmlPage({
+      method: 'GET',
+      url: logoutUrl,
+    })
+    return logoutPage
   } catch (error) {
     log('Disconnect error', { error })
   }
@@ -283,7 +287,7 @@ export async function renewRequest(session, documents) {
   const config = {
     method: 'POST',
     url: `${bibHost}/web2/tramp2.exe/form/${session}`,
-    data: stringify(requestBody),
+    data: requestBody,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },

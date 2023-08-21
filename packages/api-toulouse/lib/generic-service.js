@@ -1,7 +1,7 @@
 import debug from 'debug'
-import axios from 'axios'
 import * as cheerio from 'cheerio'
 
+import { requestHtmlPage } from './utils'
 import NotAvailableError from './errors/NotAvailableError'
 
 const log = debug('bibtou:generic')
@@ -20,8 +20,11 @@ export async function getSession() {
   const url = `${bibHost}/web2/tramp2.exe/log_in?setting_key=BMT1&screen=MyAccount.html`
   log(`Get homepage ${url}`)
   try {
-    const homeResponse = await axios.get(url)
-    const $ = cheerio.load(homeResponse.data)
+    const homePage = await requestHtmlPage({
+      method: 'GET',
+      url,
+    })
+    const $ = cheerio.load(homePage)
     const loginFormUrl = $('form[name=loginWN]').attr('action')
     if (!loginFormUrl) {
       throw new Error('Impossible de trouver le code de session')

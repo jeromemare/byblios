@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import debug from 'debug'
 import { stringify } from 'querystring'
 import * as cheerio from 'cheerio'
@@ -61,6 +62,9 @@ async function getReferenceFromWebResultList(
       maxAttempts: 4,
     })(result, sessionId),
   )
+
+  console.log(results)
+
   return results
 }
 
@@ -105,10 +109,13 @@ export async function search(term, limit) {
     location_group_filter: 'ALL',
   }
 
+  const isNativeMobile = window.cordova && window.cordova.plugin && window.cordova.plugin.http
+  const data = isNativeMobile ? requestBody : stringify(requestBody)
+
   const config = {
     method: 'POST',
     url: `${bibHost}/web2/tramp2.exe/form/${sessionId}`,
-    data: stringify(requestBody),
+    data,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -152,10 +159,14 @@ export async function prepare(term) {
     k_keyword: 'OK',
     location_group_filter: 'ALL',
   }
+
+  const isNativeMobile = window.cordova && window.cordova.plugin && window.cordova.plugin.http
+  const data = isNativeMobile ? requestBody : stringify(requestBody)
+
   const config = {
     method: 'POST',
     url: `${bibHost}/web2/tramp2.exe/form/${sessionId}`,
-    data: stringify(requestBody),
+    data,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -237,10 +248,14 @@ export async function prepareAdvanced(query = {}) {
     servers: '1home',
     keyword_parser: 'CCL_SEARCH',
   }
+
+  const isNativeMobile = window.cordova && window.cordova.plugin && window.cordova.plugin.http
+  const data = isNativeMobile ? requestBody : stringify(requestBody)
+
   const config = {
     method: 'POST',
     url: `${bibHost}/web2/tramp2.exe/do_keyword_search/${sessionId}`,
-    data: stringify(requestBody),
+    data,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },

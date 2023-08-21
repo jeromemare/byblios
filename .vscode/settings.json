@@ -1,0 +1,11 @@
+{
+  // Nombre d'espaces correspondant à une tabulation. Ce paramètre est remplacé en fonction du contenu du fichier quand 'editor.detectIndentation' est activé.
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": ["source.fixAll.eslint"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"]
+}

@@ -3,5 +3,6 @@
     <!--    https://developer.android.com/training/articles/security-config -->
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">catalogues.toulouse.fr</domain>
+        <domain includeSubdomains="true">images.titelive.com</domain>
     </domain-config>
 </network-security-config>

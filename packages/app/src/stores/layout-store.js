@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 export const useLayoutStore = defineStore("layout", {
+  persist: true,
   state: () => ({
     isSidebarVisible: true,
   }),

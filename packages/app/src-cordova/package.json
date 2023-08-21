@@ -13,7 +13,8 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-advanced-http": {
         "ANDROIDBLACKLISTSECURESOCKETPROTOCOLS": "SSLv3,TLSv1"
-      }
+      },
+      "cordova-plugin-file": {}
     }
   }
 }

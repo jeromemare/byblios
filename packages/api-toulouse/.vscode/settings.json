@@ -1,6 +1,7 @@
 {
   // "javascript.implicitProjectConfig.checkJs": true,
 
+  "editor.renderWhitespace": "boundary",
   "editor.tabSize": 2,
   "editor.rulers": [
     80,

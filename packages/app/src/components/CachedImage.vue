@@ -35,24 +35,31 @@ export default {
     },
   },
   async mounted() {
-    const image = await this.$vlf.getItem(this.id);
+    if (!this.url) {
+      return
+    }
+
+    const image = await this.$vlf.getItem(this.id)
     if (image) {
-      this.imageEncoded = image;
+      this.imageEncoded = image
     } else {
       const url = Platform.is.nativeMobile
         ? this.url
         : this.url.replace(
             "http://images.titelive.com/",
             "https://localhost:9000/cover/"
-          );
-      const response = await this.$axios.get(url, {
+          )
+      console.log('Get image', url)
+      const response = await this.$request({
+        url,
+        method: 'get',
         responseType: "arraybuffer",
-      });
+      })
       this.imageEncoded = Buffer.from(response.data, "binary").toString(
         "base64"
-      );
-      await this.$vlf.setItem(this.id, this.imageEncoded);
+      )
+      await this.$vlf.setItem(this.id, this.imageEncoded)
     }
   },
-};
+}
 </script>

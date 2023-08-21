@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import iso88591 from 'windows-1252'
 import axios from 'axios'
 
@@ -12,9 +13,19 @@ function isNode() {
   )
 }
 
+function createFileReader() {
+  if (window.cordova) {
+    const reader = new FileReader()
+    /* eslint-disable no-underscore-dangle */
+    return reader._realReader
+  }
+
+  return new FileReader()
+}
+
 async function convertBlobToText(blob, encoding = 'UTF-8') {
   // eslint-disable-next-line no-undef
-  const reader = new FileReader()
+  const reader = createFileReader()
 
   return new Promise(resolve => {
     // This fires after the blob has been read/loaded.
@@ -38,15 +49,38 @@ async function requestHtmlPageForNode(options) {
   return iso88591.decode(response.data.toString('binary'))
 }
 
+async function requestBrowser(options) {
+  if (window.cordova && window.cordova.plugin && window.cordova.plugin.http) {
+    console.log('Use Cordova advanced http')
+    const { url, ...cordovaOptions } = options
+    cordovaOptions.method = (cordovaOptions.method || 'get').toLowerCase()
+    // prettier-ignore
+    return new Promise((resolve, reject) => window.cordova.plugin.http.sendRequest(url, cordovaOptions, (response) => {
+      resolve(response)
+    }, (response) => {
+      reject(response)
+    }))
+  }
+
+  return axios.request(options)
+}
+
 async function requestHtmlPageForBrowser(options) {
   const browserOptions = {
     ...options,
     responseType: 'blob',
   }
-  const response = await axios.request(browserOptions)
+  const response = await requestBrowser(browserOptions)
   const blob = response.data
 
-  return convertBlobToText(blob, 'iso8859-1')
+  try {
+    const data = await convertBlobToText(blob, 'iso8859-1')
+    return data
+  } catch (err) {
+    console.log(err)
+  }
+
+  return ''
 }
 
 export async function requestHtmlPage(options) {
