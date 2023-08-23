@@ -9,7 +9,7 @@ import {
 } from "src/services/book-service";
 
 export const useSearchStore = defineStore("search", {
-  persist: true,
+  persist: false,
   state: () => ({
     filters: {
       available: {
