@@ -21,16 +21,16 @@
       <q-item-label caption>
         {{ book.auteur }}
       </q-item-label>
+
       <q-item-label caption :class="statusTextColor">
         <q-icon :name="statusIcon" :color="statusColor" text-color="white" />
+        <q-chip dense size="sm" clickable @click="$emit('filter', book.emprunte)">
+          {{ book.emprunte }}
+        </q-chip>
         {{ statusLabel }}
       </q-item-label>
     </q-item-section>
-    <q-item-section side right top>
-      <q-chip dense size="sm" clickable @click="$emit('filter', book.emprunte)">
-        {{ book.emprunte }}
-      </q-chip>
-    </q-item-section>
+
     <q-dialog v-model="confirmRenew" persistent>
       <q-card>
         <q-bar class="bg-primary text-white">
@@ -159,3 +159,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.article-side {
+  align-items: center;
+}
+
+</style>
