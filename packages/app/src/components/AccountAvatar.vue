@@ -59,7 +59,7 @@ export default {
     badgeLabel() {
       return this.lateBooksCount > 0
         ? this.lateBooksCount
-        : this.leftBooksCount;
+        : this.borrowedBooksCount;
     },
     badgeColor() {
       return this.lateBooksCount > 0 ? "negative" : "positive";
