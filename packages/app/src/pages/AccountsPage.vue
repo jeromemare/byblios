@@ -2,7 +2,7 @@
   <q-page class="flex content-start column">
     <div v-if="!hasUser" class="center-content">Aucun abonnement</div>
     <account-item
-      v-for="user in userList"
+      v-for="user in filteredUserList"
       :key="user.id"
       class="q-ma-md row items-start justify-center"
       :user="user"
@@ -36,9 +36,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(useApiStore, ["userList"]),
+    ...mapState(useApiStore, ["userList", "hasUserFilterOn", "filteredUsers"]),
     hasUser() {
       return this.userList && this.userList.length > 0;
+    },
+    filteredUserList() {
+      return this.userList.filter(user => !this.hasUserFilterOn || this.filteredUsers.includes(user.id))
     },
   },
   methods: {
