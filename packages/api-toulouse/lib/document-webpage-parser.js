@@ -41,9 +41,10 @@ const parser = {
       '#contentholder > table > tbody > tr > td:nth-child(2) > table:nth-child(1) > tbody > tr > td:nth-child(2) > h1',
     )
     const title = titleHtml
-      .text()
+      .prop('innerText')
       .replace('/', '')
       .trim()
+
     return title
   },
   author({ $ }) {
@@ -96,24 +97,23 @@ const parser = {
     let copies = []
 
     try {
-      copies =
-        cleanTable.length > 0
-          ? cleanTable[0].slice(1).map((titre, i) => {
-              const library = (cleanTable[0][i + 1] || '').trim()
-              const index = (cleanTable[1][i + 1] || '').trim()
-              const type = (cleanTable[2][i + 1] || '').trim()
-              const localisation = (cleanTable[3][i + 1] || '').trim()
-              const availableOn = (cleanTable[4][i + 1] || '').trim()
+      if (cleanTable.length > 0) {
+        copies = cleanTable[0].slice(1).map((titre, i) => {
+          const library = (cleanTable[0][i + 1] || '').trim()
+          const index = (cleanTable[1][i + 1] || '').trim()
+          const type = (cleanTable[2][i + 1] || '').trim()
+          const localisation = (cleanTable[3][i + 1] || '').trim()
+          const availableOn = (cleanTable[4][i + 1] || '').trim()
 
-              return {
-                library,
-                type,
-                index,
-                localisation,
-                availableOn,
-              }
-            })
-          : []
+          return {
+            library,
+            type,
+            index,
+            localisation,
+            availableOn,
+          }
+        })
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message)
