@@ -1,14 +1,13 @@
 <template>
-  <q-page class="flex content-start">
+  <q-page class="flex content-start column">
     <div v-if="!hasUser" class="center-content">Aucun abonnement</div>
-    <div class="q-pa-md row items-start justify-center q-gutter-md">
-      <account-item
-        v-for="user in userList"
-        :key="user.id"
-        :user="user"
-        @click="editUser(user)"
-      />
-    </div>
+    <account-item
+      v-for="user in userList"
+      :key="user.id"
+      class="q-ma-md row items-start justify-center"
+      :user="user"
+      @click="editUser(user)"
+    />
 
     <q-dialog v-model="showUserForm">
       <account-form :user="userEdited" />
