@@ -6,6 +6,7 @@
         <q-toolbar-title>
           <span class="app-title">{{ appTitle }}</span>
         </q-toolbar-title>
+        <q-btn flat round dense icon="mdi-notebook-heart" @click="openSearch" />
         <q-btn flat round dense icon="search" @click="openSearch" />
       </q-toolbar>
     </q-header>
@@ -85,15 +86,20 @@
           </q-list>
         </q-scroll-area>
 
-        <q-img class="absolute-top" src="/img/fond-byblios-5.jpg" style="height: 80px">
+        <!-- <q-img class="absolute-top" src="/img/fond-byblios-5.jpg" style="height: 80px"> -->
+        <div class="absolute-top pt15 q-mb-sm" style="height: 80px">
           <div class="row bg-transparent">
-            <q-img src="/img/byblios-avatar.png" width="56px" />
-            <div class="column" style="padding-top: 10px; padding-left: 15px;">
+            <q-avatar rounded size="40px" style="padding-top: 25px; padding-left: 15px;">
+              <img src="/img/byblios-avatar.png">
+            </q-avatar>
+            <div class="column text-white" style="padding-top: 25px; padding-left: 15px; margin-left: 15px;">
               <div class="text-weight-bold app-title">{{ appTitle }}</div>
               <div>Bibliothèque de Toulouse</div>
             </div>
           </div>
-        </q-img>
+          <q-btn icon="info" rounded flat color="white" class="fixed-top-right" />
+        </div>
+        <!-- </q-img> -->
       </q-drawer>
 
     <q-page-container>
@@ -221,4 +227,14 @@ export default {
 
 .wrapper
   display: flex
+
+
+.pt15
+    background-color: #5e806b
+    background-size: 13px 13px, 29px 29px, 37px 37px, 53px 53px
+    background-image: -webkit-linear-gradient(0, rgba(255, 255, 255, .07) 50%, transparent 50%), -webkit-linear-gradient(0, rgba(255, 255, 255, .13) 50%, transparent 50%), -webkit-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .17) 50%), -webkit-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .19) 50%)
+    background-image: -moz-linear-gradient(0, rgba(255, 255, 255, .07) 50%, transparent 50%), -moz-linear-gradient(0, rgba(255, 255, 255, .13) 50%, transparent 50%), -moz-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .17) 50%), -moz-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .19) 50%)
+    background-image: -ms-linear-gradient(0, rgba(255, 255, 255, .07) 50%, transparent 50%), -ms-linear-gradient(0, rgba(255, 255, 255, .13) 50%, transparent 50%), -ms-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .17) 50%), -ms-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .19) 50%)
+    background-image: -o-linear-gradient(0, rgba(255, 255, 255, .07) 50%, transparent 50%), -o-linear-gradient(0, rgba(255, 255, 255, .13) 50%, transparent 50%), -o-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .17) 50%), -o-linear-gradient(0, transparent 50%, rgba(255, 255, 255, .19) 50%)
+    background-image: linear-gradient(0, rgba(255, 255, 255, .07) 50%, transparent 50%), linear-gradient(0, rgba(255, 255, 255, .13) 50%, transparent 50%), linear-gradient(0, transparent 50%, rgba(255, 255, 255, .17) 50%), linear-gradient(0, transparent 50%, rgba(255, 255, 255, .19) 50%)
 </style>

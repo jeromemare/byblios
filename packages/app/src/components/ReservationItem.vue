@@ -23,7 +23,10 @@
           text-color="white"
           icon="directions"
         >
-          <span class="where">{{ book.where }}</span>
+        <div class="ellipsis">
+          {{ book.where  }}
+          <q-tooltip>{{ cookiesLabel }}</q-tooltip>
+        </div>
         </q-chip>
       </q-item-label>
     </q-item-section>
@@ -90,8 +93,3 @@ export default {
   },
 };
 </script>
-
-<style lang="sass" scoped>
-.where
-  white-space: normal
-</style>
