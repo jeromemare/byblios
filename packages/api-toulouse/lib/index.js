@@ -67,13 +67,15 @@ function createReservedBookListFromHtmlTable(tableData) {
   const cleanTable = tableData.slice(1).map(list => list.slice(1))
 
   if (cleanTable.length > 0) {
-    return cleanTable[0].map((titre, index) => {
+    return cleanTable[0].map((cote, index) => {
+      const titre = cleanTable[1][index]
       const dateSince = cleanTable[4][index]
       const since = dateSince !== '' ? parse(dateSince.trim(), 'd/M/yyyy', new Date()) : undefined
       return {
+        cote,
         titre,
-        auteur: cleanTable[1][index],
-        where: cleanTable[2][index],
+        auteur: cleanTable[2][index],
+        where: cleanTable[3][index],
         since,
       }
     })
