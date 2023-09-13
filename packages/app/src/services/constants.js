@@ -1,1 +1,1 @@
-export const MAX_DOCUMENTS = 30
+export const MAX_DOCUMENTS = 16
