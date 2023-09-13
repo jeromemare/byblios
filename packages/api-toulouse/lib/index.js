@@ -42,15 +42,15 @@ function createBookListFromHtmlTable(tableData, $) {
     if (!html) {
       return ''
     }
+
     let htmlData = ''
-    // console.log('> ', html)
     try {
       const processedHtml = $(`<div>${html}<div>`).prop('innerText')
       htmlData = processedHtml || ''
     } catch (err) {
       htmlData = html || ''
     }
-    // console.log('>> ', htmlData)
+
     return htmlData.trim()
   }
 
