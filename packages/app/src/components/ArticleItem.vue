@@ -74,7 +74,7 @@
 import { mapState, mapActions } from "pinia";
 import { useApiStore } from "../stores/api-store";
 
-import { parseISO, differenceInDays, formatDistanceStrict } from "date-fns";
+import { addDays, parseISO, differenceInDays, formatDistanceStrict } from "date-fns";
 import { fr } from "date-fns/locale";
 
 export default {
@@ -132,12 +132,16 @@ export default {
       return differenceInDays(parseISO(this.book.rendre), new Date());
     },
     statusLabel() {
-      return this.daysToDue <= 0
+      if (this.daysToDue === 0) {
+        return 'En retard aujourd\'hui'
+      }
+
+      return this.daysToDue < 0
         ? `En retard (${Math.abs(this.daysToDue) + 1} jour${
             this.daysToDue > 0 ? "s" : ""
           })`
         : this.book.rendre
-          ? formatDistanceStrict(parseISO(this.book.rendre), new Date(), {
+          ? formatDistanceStrict(addDays(parseISO(this.book.rendre), 1), new Date(), {
               locale: fr,
               addSuffix: true,
               unit: "day",
