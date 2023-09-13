@@ -3,8 +3,7 @@
     <q-header>
       <q-toolbar class="text-white no-border">
         <q-tabs v-model="tab" shrink>
-          <q-tab :alert="searchInProgress" name="search" icon="search" />
-          <!-- <q-tab name="favorites" icon="favorite">
+          <q-tab name="favorites" icon="favorite">
             <q-badge
               v-if="favoriteCount > 0"
               color="white"
@@ -13,70 +12,12 @@
             >
               {{ favoriteCount }}
             </q-badge>
-          </q-tab> -->
+          </q-tab>
         </q-tabs>
         <q-toolbar-title />
         <q-btn icon="close" flat @click="$emit('close')" />
       </q-toolbar>
-      <q-linear-progress
-        v-if="tab === 'search' && searchInProgress"
-        :value="searchProgress"
-        color="accent"
-        track-color="grey-4"
-        size="30px"
-      >
-        <div class="absolute-full flex flex-center">
-          <q-badge
-            v-if="foundDocumentsCount > 0"
-            color="white"
-            text-color="accent"
-            :label="searchInProgressLabel"
-          />
-          <q-spinner-dots v-else color="accent" size="1em" />
-        </div>
-      </q-linear-progress>
     </q-header>
-
-    <q-footer v-if="displayResults">
-      <q-toolbar
-        v-if="isTextFilterActivated"
-        bordered
-        class="bg-white text-primary"
-      >
-        <q-input
-          v-model="textFilter"
-          class="full-width"
-          outlined
-          clearable
-          placeholder="Rechercher dans la liste"
-          hint="Auteur, titre ou résumé"
-          dense
-          @clear="toggleTextFilterMode"
-        />
-      </q-toolbar>
-      <q-toolbar bordered class="bg-white text-primary">
-        <q-btn :icon="viewerModeIcon" flat @click="toggleVueMode" />
-        <q-btn :icon="textFilterModeIcon" flat @click="toggleTextFilterMode" />
-        <q-toggle v-model="authorFilter" icon="fas fa-user-tag" color="green" />
-        <q-toggle
-          v-model="availableFilter"
-          checked-icon="check"
-          color="green"
-          unchecked-icon="clear"
-        />
-        <q-select
-          v-model="libraryFilter"
-          :options="libraryOptions"
-          label="Bibliothèque"
-          clearable
-        />
-      </q-toolbar>
-      <search-summary-toolbar
-        v-if="displayResults"
-        :query="query"
-        @new-search="back"
-      />
-    </q-footer>
 
     <q-page-container>
       <q-page>
@@ -86,20 +27,7 @@
           transition-prev="jump-up"
           transition-next="jump-up"
         >
-          <q-tab-panel name="search">
-            <keep-alive>
-              <search-results-panel
-                v-if="displayResults"
-                :documents="filteredDocuments"
-                :query="query"
-                :full-mode="fullMode"
-                @new-search="displayResults = false"
-              />
-              <search-panel v-else @search="launchSearch" />
-            </keep-alive>
-          </q-tab-panel>
-
-          <!-- <q-tab-panel name="favorites">
+          <q-tab-panel name="favorites">
             <component
               :is="favoriteDocumentComponent"
               v-for="document in favoriteDocuments"
@@ -120,7 +48,7 @@
               />
               <q-btn fab icon="send" color="primary" @click="toClipboard" />
             </q-page-sticky>
-          </q-tab-panel> -->
+          </q-tab-panel>
         </q-tab-panels>
 
         <q-page-sticky position="bottom-right" :offset="[18, 88]">
@@ -184,15 +112,15 @@ export default {
     SearchPanel,
     SearchResultsPanel,
     SearchSummaryToolbar,
-    // SearchDocumentTile,
-    // SearchDocumentCard,
+    SearchDocumentTile,
+    SearchDocumentCard,
   },
   data() {
     return {
       fullMode: false,
       textFilterMode: false,
       textFilter: "",
-      tab: "search",
+      tab: "favorites",
       drawer: false,
       isOpen: false,
       query: {},

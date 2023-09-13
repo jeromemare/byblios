@@ -6,7 +6,7 @@
         <q-toolbar-title>
           <span class="app-title">{{ appTitle }}</span>
         </q-toolbar-title>
-        <q-btn flat round dense icon="mdi-notebook-heart" @click="openSearch" />
+        <q-btn flat round dense icon="mdi-playlist-star" @click="openLists" />
         <q-btn flat round dense icon="search" @click="openSearch" />
       </q-toolbar>
     </q-header>
@@ -147,29 +147,35 @@
       </q-tabs>
     </q-footer>
     <q-dialog v-model="isSearchOpened">
-      <search-form />
+      <search-form @close="isSearchOpened = false" />
+    </q-dialog>
+    <q-dialog v-model="isListOpened">
+      <list-form @close="isListOpened = false" />
     </q-dialog>
   </q-layout>
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState } from "pinia";
 
 import { useApiStore } from "../stores/api-store";
 
 import SidebarPanel from "src/components/SidebarPanel.vue";
 import SearchForm from "src/components/SearchForm.vue";
+import ListForm from "src/components/ListForm.vue";
 
 export default {
   name: "MyLayout",
   components: {
     SidebarPanel,
     SearchForm,
+    ListForm,
   },
   data() {
     return {
       tab: "",
       isSearchOpened: false,
+      isListOpened: false,
       drawer: false,
     };
   },
@@ -204,6 +210,9 @@ export default {
   methods: {
     openSearch() {
       this.isSearchOpened = true;
+    },
+    openLists() {
+      this.isListOpened = true;
     },
   }
 };
