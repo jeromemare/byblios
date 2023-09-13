@@ -21,7 +21,15 @@ import {
 } from "src/services/book-service";
 
 export const useApiStore = defineStore("api", {
-  persist: true,
+  persist: {
+    paths: [
+      'borrowedBooksByUser',
+      'reservedBooksByUser',
+      'users',
+      'filters',
+      'searchOpened',
+    ],
+  },
   state: () => ({
     borrowedBooksByUser: {},
     reservedBooksByUser: {},
