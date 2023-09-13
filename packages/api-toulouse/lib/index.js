@@ -42,15 +42,15 @@ function createBookListFromHtmlTable(tableData, $) {
     if (!html) {
       return ''
     }
-
     let htmlData = ''
+    // console.log('> ', html)
     try {
       const processedHtml = $(`<div>${html}<div>`).prop('innerText')
       htmlData = processedHtml || ''
     } catch (err) {
       htmlData = html || ''
     }
-
+    // console.log('>> ', htmlData)
     return htmlData.trim()
   }
 
@@ -271,8 +271,9 @@ export async function getAccountDetails(user) {
       const sessionToken = session.split('/').pop()
       const accountHtmlPage = await getAccountHtmlPage(session, user)
       // # On se déconnecte pour libérer la session côté serveur
+      const accountDetails = getAccountInfoFromWebPage(accountHtmlPage, user)
       await disconnect(sessionToken)
-      return getAccountInfoFromWebPage(accountHtmlPage, user)
+      return accountDetails
     }
     return {
       error: true,
@@ -294,14 +295,15 @@ export async function renewRequest(session, documents) {
   if (hasnow.length === 1) {
     hasnow = hasnow.pop()
   }
-  const requestBody = {
-    HASNOW: hasnow,
-    buttons: [
-      'Renew=renew_hasnow screen=MyAccount.html',
-      'renew_hasnow hasnow=all screen=MyAccount.html',
-    ],
-    Renew: 'Renouveler les prêts sélectionnés',
-  }
+  const requestBody = `HASNOW=${hasnow}&buttons=Renew%3Drenew_hasnow+screen%3DMyAccount.html&Renew=Renouveler+les+pr%EAts+s%E9lectionn%E9s&buttons=RenewAll%3Drenew_hasnow+hasnow=all+screen%3DMyAccount.html`
+  // const requestBody = {
+  //   HASNOW: hasnow,
+  //   buttons: [
+  //     'Renew=renew_hasnow+screen=MyAccount.html',
+  //     'RenewAll=renew_hasnow+hasnow=all+screen=MyAccount.html',
+  //   ],
+  //   Renew: 'Renouveler+les+pr%EAts+s%E9lectionn%E9s',
+  // }
 
   const bibHost = getBibHost()
   const config = {
@@ -325,11 +327,12 @@ export async function renewDocumentsForUser({ user, documents }) {
   log(`user ${user.name} connected`)
   // # Renew all user documents
   const accountHtmlPage = await renewRequest(session, documents)
+  // # Update documents list for user
+  const accountDetails = getAccountInfoFromWebPage(accountHtmlPage, user)
   // # Disconnect the user
   await disconnect(session)
   log(`user ${user.name} disconnected`)
-  // # Update documents list for user
-  return getAccountInfoFromWebPage(accountHtmlPage, user)
+  return accountDetails
 }
 
 export async function renewDocuments(documents) {

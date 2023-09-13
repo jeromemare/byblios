@@ -214,7 +214,7 @@ export const useApiStore = defineStore("api", {
       this.launchUpdate();
       try {
         const results = await renewDocuments(this.documentsToRenew);
-        if (results && results.length > 1) {
+        if (results && results.length > 0) {
           await mapSeries(results, async (accountDetail) => {
             if (accountDetail && accountDetail.detail) {
               // La requête s'est bien passé
@@ -236,7 +236,7 @@ export const useApiStore = defineStore("api", {
           const accountDetail = results.pop();
           if (accountDetail && accountDetail.detail) {
             // La requête s'est bien passé
-            tshi.updateAccount({ accountDetail, user });
+            this.updateAccount({ accountDetail, user });
           }
         }
       } finally {
