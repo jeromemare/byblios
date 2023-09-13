@@ -48,9 +48,7 @@ const parser = {
     return title
   },
   author({ $ }) {
-    const authorInfo = $('#auteur')
-      .text()
-      .trim()
+    const authorInfo = ($('#auteur').prop('innerText') || '').replace('?NON ETABLIE', '').trim()
     const [authorLabel] = authorInfo.split('-').map(text => text.trim())
     return authorLabel.replace(/^de /, '')
   },

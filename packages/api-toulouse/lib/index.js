@@ -37,21 +37,39 @@ async function getAccountHtmlPage(session, user) {
   return requestHtmlPage(config)
 }
 
-function createBookListFromHtmlTable(tableData) {
+function createBookListFromHtmlTable(tableData, $) {
+  function getInnerText(html) {
+    if (!html) {
+      return ''
+    }
+
+    let htmlData = ''
+    try {
+      const processedHtml = $(`<div>${html}<div>`).prop('innerText')
+      htmlData = processedHtml || ''
+    } catch (err) {
+      htmlData = html || ''
+    }
+
+    return htmlData.trim()
+  }
+
   const cleanTable = tableData.slice(1).map(list => list.slice(1))
-  console.log('--', { cleanTable })
   if (cleanTable.length > 0) {
-    return cleanTable[0].map((titre, index) => {
-      const renewalText = cleanTable[7][index].split('\n')
+    return cleanTable[0].map((htmlTitle, index) => {
+      const titre = getInnerText(htmlTitle)
+      const auteur = getInnerText(cleanTable[1][index]).replace('?NON ETABLIE', '')
+      const renewalText = getInnerText(cleanTable[7][index]).split('\n')
+      const retard = getInnerText(cleanTable[6][index])
       const [nbRenewal, dateRenewal = ''] = renewalText.map(text => text.trim())
       return {
         titre,
-        auteur: cleanTable[1][index],
-        code: cleanTable[2][index],
-        type: cleanTable[3][index],
-        emprunte: cleanTable[4][index],
-        rendre: parse(cleanTable[5][index].trim(), 'd/M/yyyy,HH:mm', new Date()),
-        retard: cleanTable[6][index],
+        auteur,
+        code: getInnerText(cleanTable[2][index]),
+        type: getInnerText(cleanTable[3][index]),
+        emprunte: getInnerText(cleanTable[4][index]),
+        rendre: parse(getInnerText(cleanTable[5][index]), 'd/M/yyyy,HH:mm', new Date()),
+        retard,
         renewal: {
           count: nbRenewal || 0,
           date: dateRenewal,
@@ -142,8 +160,8 @@ function getAccountBorrowedBooks(html, user) {
   const $ = cheerio.load(html)
   cheerioTableparser($)
   const documentListSelector = '#panel2 > div > form > table:nth-child(2)'
-  const documents = $(documentListSelector).parsetable(true, true, true)
-  const bookList = createBookListFromHtmlTable(documents)
+  const documents = $(documentListSelector).parsetable(true, true, false)
+  const bookList = createBookListFromHtmlTable(documents, $)
 
   const tds = $('#panel2 > div > form > table:nth-child(2) input[name=HASNOW]')
     .map(function getNodeValue() {
