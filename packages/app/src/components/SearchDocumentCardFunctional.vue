@@ -113,14 +113,14 @@
 
 <script>
 export default {
-  name: "SearchDocumentTileFunctional",
+  name: 'SearchDocumentTileFunctional',
   props: {
     document: {
       type: Object,
-      required: true,
-    },
-  },
-};
+      required: true
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

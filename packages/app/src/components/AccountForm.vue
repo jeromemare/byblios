@@ -57,71 +57,71 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
+import { mapActions } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import colorsService from "src/services/colors-service";
+import colorsService from 'src/services/colors-service'
 
 export default {
-  name: "AccountForm",
+  name: 'AccountForm',
   props: {
     user: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      id: "",
-      name: "",
-      pin: "",
-      color: "",
-    };
+      id: '',
+      name: '',
+      pin: '',
+      color: ''
+    }
   },
   computed: {
-    colorOptions() {
-      return colorsService.getColorsName();
+    colorOptions () {
+      return colorsService.getColorsName()
     },
-    newUser() {
+    newUser () {
       return {
         ...this.user,
         id: this.id,
         name: this.name,
         pin: this.pin,
-        color: this.color,
-      };
-    },
+        color: this.color
+      }
+    }
   },
   watch: {
     user: {
       immediate: true,
       handler: function () {
-        this.id = this.user.id;
-        this.name = this.user.name;
-        this.pin = this.user.pin;
-        this.color = this.user.color || "blue";
-      },
-    },
+        this.id = this.user.id
+        this.name = this.user.name
+        this.pin = this.user.pin
+        this.color = this.user.color || 'blue'
+      }
+    }
   },
   methods: {
-    ...mapActions(useApiStore, ["updateUser", "removeUser"]),
-    async deleteUser({ reset }) {
-      await this.removeUser(this.user);
-      this.$q.notify("Le compte a été supprimé");
-      this.finalize(reset);
+    ...mapActions(useApiStore, ['updateUser', 'removeUser']),
+    async deleteUser ({ reset }) {
+      await this.removeUser(this.user)
+      this.$q.notify('Le compte a été supprimé')
+      this.finalize(reset)
     },
-    finalize(reset) {
+    finalize (reset) {
       this.timer = setTimeout(() => {
-        reset();
-      }, 2000);
+        reset()
+      }, 2000)
     },
-    updateColor(newColor) {
-      this.color = newColor;
-      this.updateUser(this.newUser);
-    },
-  },
-};
+    updateColor (newColor) {
+      this.color = newColor
+      this.updateUser(this.newUser)
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

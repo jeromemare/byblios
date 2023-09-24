@@ -29,26 +29,26 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import ReservationItem from "src/components/ReservationItem.vue";
+import ReservationItem from 'src/components/ReservationItem.vue'
 
 export default {
-  name: "ReservationsPage",
+  name: 'ReservationsPage',
   components: {
-    ReservationItem,
+    ReservationItem
   },
   computed: {
     ...mapState(useApiStore, [
-      "availableReservedBooks",
-      "unavailableReservedBooks",
-      "availableReservedBooksCount",
-      "unavailableReservedBooksCount",
-      "reservedBooksCount",
-      "hasUserFilterOn",
-      "filteredUsers",
+      'availableReservedBooks',
+      'unavailableReservedBooks',
+      'availableReservedBooksCount',
+      'unavailableReservedBooksCount',
+      'reservedBooksCount',
+      'hasUserFilterOn',
+      'filteredUsers'
     ]),
     availableReservedBooksFiltered () {
       return this.availableReservedBooks
@@ -58,8 +58,8 @@ export default {
       return this.unavailableReservedBooks
         .filter(book => !this.hasUserFilterOn || this.filteredUsers.includes(book.user.id))
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="sass" scoped>

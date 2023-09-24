@@ -136,7 +136,7 @@ function getAccountUserInfo(html) {
   )
   const userInfoDataHtml = userInfoHtml.html()
   if (!userInfoDataHtml) {
-    console.error("L'utilisateur n'est pas reconnu")
+    log("L'utilisateur n'est pas reconnu")
   }
   // TODO Si userInfoDataHtml est null => l'utilisateur n'existe pas, remonter l'information
   const userInfoData = userInfoDataHtml.split('<br>').map(info => info.trim())
@@ -260,7 +260,7 @@ function getAccountInfoFromWebPage(accountHtmlPage, user) {
  * @param {Object} user
  */
 export async function getAccountDetails(user) {
-  console.log('Get Account detail for', { user })
+  log('Get Account detail for', { user })
   if (!user || !user.id || !user.pin) {
     log(`getAccountDetails l'utilisateur ${user} ne définit pas d'id ou de pin`)
   }

@@ -63,8 +63,6 @@ async function getReferenceFromWebResultList(
     })(result, sessionId),
   )
 
-  console.log(results)
-
   return results
 }
 

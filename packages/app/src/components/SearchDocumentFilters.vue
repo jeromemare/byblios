@@ -33,13 +33,13 @@
 
 <script>
 export default {
-  name: "SearchDocumentFilters",
-  data() {
+  name: 'SearchDocumentFilters',
+  data () {
     return {
       availableFilter: false,
       librairiesFilter: [],
-      librairiesOptions: ["Cabanis", "Saint Cyprien", "Lardenne"],
-    };
-  },
-};
+      librairiesOptions: ['Cabanis', 'Saint Cyprien', 'Lardenne']
+    }
+  }
+}
 </script>

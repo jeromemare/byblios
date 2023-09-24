@@ -1,7 +1,7 @@
-import { boot } from "quasar/wrappers"
-import axios from "axios"
+import { boot } from 'quasar/wrappers'
+import axios from 'axios'
 
-async function requestBrowser(options) {
+async function requestBrowser (options) {
   if (window.cordova && window.cordova.plugin && window.cordova.plugin.http) {
     console.log('Use Cordova advanced http')
     const { url, ...cordovaOptions } = options

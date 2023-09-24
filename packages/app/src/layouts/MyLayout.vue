@@ -156,66 +156,66 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import SidebarPanel from "src/components/SidebarPanel.vue";
-import SearchForm from "src/components/SearchForm.vue";
-import ListForm from "src/components/ListForm.vue";
+import SidebarPanel from 'src/components/SidebarPanel.vue'
+import SearchForm from 'src/components/SearchForm.vue'
+import ListForm from 'src/components/ListForm.vue'
 
 export default {
-  name: "MyLayout",
+  name: 'MyLayout',
   components: {
     SidebarPanel,
     SearchForm,
-    ListForm,
+    ListForm
   },
-  data() {
+  data () {
     return {
-      tab: "",
+      tab: '',
       isSearchOpened: false,
       isListOpened: false,
-      drawer: false,
-    };
+      drawer: false
+    }
   },
   computed: {
     ...mapState(useApiStore, [
-      "borrowedBooksCount",
-      "borrowedWarningBooksCount",
-      "lateBooksCount",
-      "availableReservedBooksCount",
-      "availableReservedBooksWarning",
-      "haveBorrowWarningBooks",
-      "haveLateDocuments",
+      'borrowedBooksCount',
+      'borrowedWarningBooksCount',
+      'lateBooksCount',
+      'availableReservedBooksCount',
+      'availableReservedBooksWarning',
+      'haveBorrowWarningBooks',
+      'haveLateDocuments'
     ]),
-    appTitle() {
-      return "b\u03B3blio\u03C2";
+    appTitle () {
+      return 'b\u03B3blio\u03C2'
     },
-    reservationStatusColor() {
-      return this.availableReservedBooksWarning ? "warning" : "positive";
+    reservationStatusColor () {
+      return this.availableReservedBooksWarning ? 'warning' : 'positive'
     },
-    borrowStatusColor() {
-      return this.haveLateDocuments ? "negative" : "warning";
+    borrowStatusColor () {
+      return this.haveLateDocuments ? 'negative' : 'warning'
     },
-    borrowStatusLabel() {
+    borrowStatusLabel () {
       return this.haveLateDocuments
         ? this.lateBooksCount
-        : this.borrowedWarningBooksCount;
+        : this.borrowedWarningBooksCount
     },
-    hasBorrowStatus() {
-      return this.haveLateDocuments || this.haveBorrowWarningBooks;
-    },
+    hasBorrowStatus () {
+      return this.haveLateDocuments || this.haveBorrowWarningBooks
+    }
   },
   methods: {
-    openSearch() {
-      this.isSearchOpened = true;
+    openSearch () {
+      this.isSearchOpened = true
     },
-    openLists() {
-      this.isListOpened = true;
-    },
+    openLists () {
+      this.isListOpened = true
+    }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>
@@ -236,7 +236,6 @@ export default {
 
 .wrapper
   display: flex
-
 
 .pt15
     background-color: #5e806b

@@ -120,104 +120,104 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions } from 'pinia'
 
-import { useFavoriteStore } from "../stores/favorite-store";
+import { useFavoriteStore } from '../stores/favorite-store'
 
-import { openURL } from "quasar";
+import { openURL } from 'quasar'
 
-import compact from "lodash/compact";
+import compact from 'lodash/compact'
 
-import CachedImage from "./CachedImage.vue";
+import CachedImage from './CachedImage.vue'
 
 const isCopyAvailable = (copy) => {
   if (!copy) {
-    return false;
+    return false
   }
 
   const unavailableLocalisation = [
-    "Réservé",
-    "Prêté",
-    "Document indisponible, acheminement en cours",
-  ];
+    'Réservé',
+    'Prêté',
+    'Document indisponible, acheminement en cours'
+  ]
   return (
-    copy.availableOn === "" &&
+    copy.availableOn === '' &&
     !unavailableLocalisation.includes(copy.localisation)
-  );
-};
-const isCopyUnavailable = (copy) => !isCopyAvailable(copy);
+  )
+}
+const isCopyUnavailable = (copy) => !isCopyAvailable(copy)
 
 const typeToIcon = {
-  livre: "fas fa-book",
-  dvd: "fas fa-film",
-  "audio-livre": "far fa-file-audio",
-};
+  livre: 'fas fa-book',
+  dvd: 'fas fa-film',
+  'audio-livre': 'far fa-file-audio'
+}
 
 export default {
-  name: "SearchDocumentTile",
+  name: 'SearchDocumentTile',
   components: {
-    CachedImage,
+    CachedImage
   },
   props: {
     document: {
       type: Object,
-      required: true,
+      required: true
     },
     fullMode: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  data() {
+  data () {
     return {
-      displayContent: "summary",
-    };
+      displayContent: 'summary'
+    }
   },
   computed: {
-    ...mapState(useFavoriteStore, ["favoriteDocuments"]),
-    favoriteActionIcon() {
-      return this.isFavorite ? "favorite" : "favorite_border";
+    ...mapState(useFavoriteStore, ['favoriteDocuments']),
+    favoriteActionIcon () {
+      return this.isFavorite ? 'favorite' : 'favorite_border'
     },
-    favoriteActionColor() {
-      return this.isFavorite ? "red" : "gray";
+    favoriteActionColor () {
+      return this.isFavorite ? 'red' : 'gray'
     },
-    typeIcon() {
-      return typeToIcon?.[this.document.type] ?? "mdi-help-rhombus-outline";
+    typeIcon () {
+      return typeToIcon?.[this.document.type] ?? 'mdi-help-rhombus-outline'
     },
-    available() {
-      return (this.document?.copies ?? []).some(isCopyAvailable);
+    available () {
+      return (this.document?.copies ?? []).some(isCopyAvailable)
     },
-    availablesInLibraries() {
-      return this.availablesCopies.map((copy) => copy.library).join(", ");
+    availablesInLibraries () {
+      return this.availablesCopies.map((copy) => copy.library).join(', ')
     },
-    availabilityColor() {
-      return this.available ? "green" : "red";
+    availabilityColor () {
+      return this.available ? 'green' : 'red'
     },
-    availablesCopies() {
-      return (compact(this.document?.copies) ?? []).filter(isCopyAvailable);
+    availablesCopies () {
+      return (compact(this.document?.copies) ?? []).filter(isCopyAvailable)
     },
-    unavailablesCopies() {
-      return (compact(this.document?.copies) ?? []).filter(isCopyUnavailable);
+    unavailablesCopies () {
+      return (compact(this.document?.copies) ?? []).filter(isCopyUnavailable)
     },
-    isFavorite() {
+    isFavorite () {
       return !!this.favoriteDocuments.find(
         (document) => this.document.id === document.id
-      );
-    },
+      )
+    }
   },
   methods: {
-    ...mapActions(useFavoriteStore, ["toggleFavoriteDocument"]),
-    toggleFavorite() {
-      this.toggleFavoriteDocument({ document: this.document });
+    ...mapActions(useFavoriteStore, ['toggleFavoriteDocument']),
+    toggleFavorite () {
+      this.toggleFavoriteDocument({ document: this.document })
     },
-    async openBookOnGoogleBook(isbn) {
-      const googleBookQuery = `https://www.googleapis.com/books/v1/volumes?q=isbn${isbn}`;
-      const response = await this.$axios.get(googleBookQuery);
-      const googleBook = response.data?.items[0];
-      openURL(googleBook.volumeInfo.previewLink);
-    },
-  },
-};
+    async openBookOnGoogleBook (isbn) {
+      const googleBookQuery = `https://www.googleapis.com/books/v1/volumes?q=isbn${isbn}`
+      const response = await this.$axios.get(googleBookQuery)
+      const googleBook = response.data?.items[0]
+      openURL(googleBook.volumeInfo.previewLink)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

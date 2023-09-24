@@ -65,139 +65,139 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
 const libraries = {
-  ALL: "Toutes les bibliothèques",
-  MGM: "Médiathèque Grand M",
-  CYP: "Médiathèque Saint-Cyprien",
-  "CAB-MCT": "Médiathèque José Cabanis (+Magasin Central)",
-  "PER-FCJ": "Biblio. d'étude et du patrimoine de Périgord (+FCJ)",
-  EMP: "Médiathèque Empalot",
-  DAU: "Médiathèque Danièle Damin (Croix-Daurade)",
-  ANC: "Ancely",
-  BON: "Bonnefoy",
-  PAV: "Côte Pavée",
-  DUR: "Duranti",
-  FAB: "Fabre",
-  IZA: "Izards",
-  MIN: "Minimes",
-  PVP: "Pavillon de Périgord",
-  PIN: "Pinel",
-  DEM: "Pont des demoiselles",
-  PRA: "Pradettes",
-  RAN: "Rangueil",
-  ROS: "Roseraie",
-  EXU: "Saint-Exupéry (Bagatelle)",
-  SER: "Serveyrolles",
-  COL: "Bibliothèque Nomade",
-  FCJ: "Fonds de Conservation Jeunesse",
-};
+  ALL: 'Toutes les bibliothèques',
+  MGM: 'Médiathèque Grand M',
+  CYP: 'Médiathèque Saint-Cyprien',
+  'CAB-MCT': 'Médiathèque José Cabanis (+Magasin Central)',
+  'PER-FCJ': "Biblio. d'étude et du patrimoine de Périgord (+FCJ)",
+  EMP: 'Médiathèque Empalot',
+  DAU: 'Médiathèque Danièle Damin (Croix-Daurade)',
+  ANC: 'Ancely',
+  BON: 'Bonnefoy',
+  PAV: 'Côte Pavée',
+  DUR: 'Duranti',
+  FAB: 'Fabre',
+  IZA: 'Izards',
+  MIN: 'Minimes',
+  PVP: 'Pavillon de Périgord',
+  PIN: 'Pinel',
+  DEM: 'Pont des demoiselles',
+  PRA: 'Pradettes',
+  RAN: 'Rangueil',
+  ROS: 'Roseraie',
+  EXU: 'Saint-Exupéry (Bagatelle)',
+  SER: 'Serveyrolles',
+  COL: 'Bibliothèque Nomade',
+  FCJ: 'Fonds de Conservation Jeunesse'
+}
 
 const sortBy = {
   AU: "Par nom d'auteur",
-  "-PBYR": "Par nouveauté",
-  PBYR: "Du plus ancien",
-  SU: "Par sujet",
-  relevance: "Plus pertinent",
-  TI: "Par titre",
-};
+  '-PBYR': 'Par nouveauté',
+  PBYR: 'Du plus ancien',
+  SU: 'Par sujet',
+  relevance: 'Plus pertinent',
+  TI: 'Par titre'
+}
 
 const shelves = {
-  LPABD: "Adultes : Bandes-dessinées",
-  LPADOC: "Adultes : Documentaires",
-  LPAETR: "Adultes : Livres en langues étrangères",
-  LPAFR: "Adultes : Fonds régional",
-  LPALV: "Adultes : Large vision",
-  LPAMUS: "Adultes : Musique",
-  LPAROM: "Adultes : Fictions ",
-  LPARP: "Adultes : Romans Policiers",
-  LPASF: "Adultes : Science-fiction",
-  LPATE: "Adultes : Textes enregistrés",
-  LPACIN: "Adultes : Cinéma : DVD",
-  LPEA: "Enfants : Albums",
-  LPEBD: "Enfants : Bandes-dessinées",
-  LPEC: "Enfants : Contes",
-  LPECDR: "Enfants : CD-Rom",
-  LPEETR: "Enfants : livres en langue étrangère",
-  LPEDOC: "Enfants : documentaires",
-  LPELJ: "Enfants : Livres-Jeux",
-  LPEMUS: "Enfants : Musique",
-  LPEPS: "Enfants : Périodiques",
-  LPEROM: "Enfants : Fictions",
-  LPETE: "Enfants : textes enregistrés",
-  LPECIN: "Enfants : Cinéma : DVD",
-  LPTPA: "Tous publics : Albums",
-  LPTPBD: "Tous publics : Bandes-déssinées",
-  LPTPDOC: "Tous publics : Documentaires",
-  LPTPFIC: "Tous publics : Fictions",
-  LPTPROM: "Tous publics : Romans",
-};
+  LPABD: 'Adultes : Bandes-dessinées',
+  LPADOC: 'Adultes : Documentaires',
+  LPAETR: 'Adultes : Livres en langues étrangères',
+  LPAFR: 'Adultes : Fonds régional',
+  LPALV: 'Adultes : Large vision',
+  LPAMUS: 'Adultes : Musique',
+  LPAROM: 'Adultes : Fictions ',
+  LPARP: 'Adultes : Romans Policiers',
+  LPASF: 'Adultes : Science-fiction',
+  LPATE: 'Adultes : Textes enregistrés',
+  LPACIN: 'Adultes : Cinéma : DVD',
+  LPEA: 'Enfants : Albums',
+  LPEBD: 'Enfants : Bandes-dessinées',
+  LPEC: 'Enfants : Contes',
+  LPECDR: 'Enfants : CD-Rom',
+  LPEETR: 'Enfants : livres en langue étrangère',
+  LPEDOC: 'Enfants : documentaires',
+  LPELJ: 'Enfants : Livres-Jeux',
+  LPEMUS: 'Enfants : Musique',
+  LPEPS: 'Enfants : Périodiques',
+  LPEROM: 'Enfants : Fictions',
+  LPETE: 'Enfants : textes enregistrés',
+  LPECIN: 'Enfants : Cinéma : DVD',
+  LPTPA: 'Tous publics : Albums',
+  LPTPBD: 'Tous publics : Bandes-déssinées',
+  LPTPDOC: 'Tous publics : Documentaires',
+  LPTPFIC: 'Tous publics : Fictions',
+  LPTPROM: 'Tous publics : Romans'
+}
 
 export default {
-  name: "SearchPanel",
-  data() {
+  name: 'SearchPanel',
+  data () {
     return {
-      searchTerm: "",
+      searchTerm: '',
       foundDocuments: [],
       runningSearch: false,
-      error: "",
+      error: '',
       selectedLibrary: null,
       selectedShelf: null,
       availableLibraries: [
         // location_group_filter
         ...Object.keys(libraries).map((code) => ({
           label: libraries[code],
-          value: code,
-        })),
+          value: code
+        }))
       ],
       availableShelves: [
         // location_filter
         ...Object.keys(shelves).map((code) => ({
           label: shelves[code],
-          value: code,
-        })),
+          value: code
+        }))
       ],
       selectedSortBy: null,
       availableSortBy: [
         // sort_by_filter
         ...Object.keys(sortBy).map((code) => ({
           label: sortBy[code],
-          value: code,
-        })),
-      ],
-    };
+          value: code
+        }))
+      ]
+    }
   },
   computed: {
-    ...mapState(useApiStore, ["activeSearch"]),
-    isTextSearchAvailable() {
-      return !this.selectedLibrary;
+    ...mapState(useApiStore, ['activeSearch']),
+    isTextSearchAvailable () {
+      return !this.selectedLibrary
     },
-    isShelfSearchAvailable() {
-      return !!this.selectedLibrary;
-    },
+    isShelfSearchAvailable () {
+      return !!this.selectedLibrary
+    }
   },
-  mounted() {
+  mounted () {
     this.selectedSortBy = {
-      label: sortBy["-PBYR"],
-      value: "-PBYR",
-    };
+      label: sortBy['-PBYR'],
+      value: '-PBYR'
+    }
     this.selectedShelf = {
       label: shelves.LPABD,
-      value: "LPABD",
-    };
+      value: 'LPABD'
+    }
   },
   methods: {
-    async search() {
+    async search () {
       const query = {
         text: this.searchTerm,
         groupLocation: this.selectedLibrary?.value,
-        location: this.selectedLibrary?.value && this.selectedShelf?.value,
-      };
-      this.$emit("search", query);
-    },
-  },
-};
+        location: this.selectedLibrary?.value && this.selectedShelf?.value
+      }
+      this.$emit('search', query)
+    }
+  }
+}
 </script>

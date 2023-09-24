@@ -28,19 +28,19 @@
 
 <script>
 export default {
-  name: "SearchSummaryToolbar",
+  name: 'SearchSummaryToolbar',
   props: {
     query: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
-    back() {
-      this.$emit("new-search");
-    },
-  },
-};
+    back () {
+      this.$emit('new-search')
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

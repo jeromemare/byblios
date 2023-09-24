@@ -6,35 +6,35 @@
 </template>
 
 <script>
-import { Platform } from "quasar";
+import { Platform } from 'quasar'
 
 export default {
-  name: "CachedImage",
+  name: 'CachedImage',
   props: {
     url: {
       type: String,
-      required: true,
+      required: true
     },
     id: {
       type: String,
-      required: true,
+      required: true
     },
     type: {
       type: String,
-      default: "jpg",
-    },
+      default: 'jpg'
+    }
   },
-  data() {
+  data () {
     return {
-      imageEncoded: null,
-    };
+      imageEncoded: null
+    }
   },
   computed: {
-    imageSrc() {
-      return `data:image/${this.type};base64,${this.imageEncoded}`;
-    },
+    imageSrc () {
+      return `data:image/${this.type};base64,${this.imageEncoded}`
+    }
   },
-  async mounted() {
+  async mounted () {
     if (!this.url) {
       return
     }
@@ -46,20 +46,20 @@ export default {
       const url = Platform.is.nativeMobile
         ? this.url
         : this.url.replace(
-            "http://images.titelive.com/",
-            "https://localhost:9000/cover/"
-          )
+          'http://images.titelive.com/',
+          'https://localhost:9000/cover/'
+        )
       console.log('Get image', url)
       const response = await this.$request({
         url,
         method: 'get',
-        responseType: "arraybuffer",
+        responseType: 'arraybuffer'
       })
-      this.imageEncoded = Buffer.from(response.data, "binary").toString(
-        "base64"
+      this.imageEncoded = Buffer.from(response.data, 'binary').toString(
+        'base64'
       )
       await this.$vlf.setItem(this.id, this.imageEncoded)
     }
-  },
+  }
 }
 </script>

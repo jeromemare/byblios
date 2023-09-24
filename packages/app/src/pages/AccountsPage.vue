@@ -16,41 +16,41 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import AccountItem from "src/components/AccountItem.vue";
-import AccountForm from "src/components/AccountForm.vue";
+import AccountItem from 'src/components/AccountItem.vue'
+import AccountForm from 'src/components/AccountForm.vue'
 
 export default {
-  name: "AccountsPage",
+  name: 'AccountsPage',
   components: {
     AccountItem,
-    AccountForm,
+    AccountForm
   },
-  data() {
+  data () {
     return {
       showUserForm: false,
-      userEdited: {},
-    };
+      userEdited: {}
+    }
   },
   computed: {
-    ...mapState(useApiStore, ["userList", "hasUserFilterOn", "filteredUsers"]),
-    hasUser() {
-      return this.userList && this.userList.length > 0;
+    ...mapState(useApiStore, ['userList', 'hasUserFilterOn', 'filteredUsers']),
+    hasUser () {
+      return this.userList && this.userList.length > 0
     },
-    filteredUserList() {
+    filteredUserList () {
       return this.userList.filter(user => !this.hasUserFilterOn || this.filteredUsers.includes(user.id))
-    },
+    }
   },
   methods: {
-    editUser(user) {
-      this.userEdited = user;
-      this.showUserForm = true;
-    },
-  },
-};
+    editUser (user) {
+      this.userEdited = user
+      this.showUserForm = true
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

@@ -38,17 +38,17 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
 export default {
-  name: "DevelopperPanel",
+  name: 'DevelopperPanel',
   computed: {
-    ...mapState(useApiStore, ["areUsersMockeable"]),
+    ...mapState(useApiStore, ['areUsersMockeable'])
   },
   methods: {
-    ...mapActions(useApiStore, ["reset", "mockUsers", "mockData"]),
-  },
-};
+    ...mapActions(useApiStore, ['reset', 'mockUsers', 'mockData'])
+  }
+}
 </script>

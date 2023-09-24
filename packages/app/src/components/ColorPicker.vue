@@ -9,26 +9,26 @@
 </template>
 
 <script>
-import colorsService from "src/services/colors-service.js";
+import colorsService from 'src/services/colors-service.js'
 
-const colors = colorsService.getColors();
+const colors = colorsService.getColors()
 
 export default {
-  name: "ColorPicker",
+  name: 'ColorPicker',
   props: {
     color: {
       type: String,
-      default: colors[0],
-    },
+      default: colors[0]
+    }
   },
-  data() {
+  data () {
     return {
       palette: colors,
-      hex: colors[0],
-    };
+      hex: colors[0]
+    }
   },
-  mounted() {
-    this.hex = this.color;
-  },
-};
+  mounted () {
+    this.hex = this.color
+  }
+}
 </script>

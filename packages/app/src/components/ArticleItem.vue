@@ -71,97 +71,97 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
-import { useApiStore } from "../stores/api-store";
+import { mapState, mapActions } from 'pinia'
+import { useApiStore } from '../stores/api-store'
 
-import { addDays, parseISO, differenceInDays, formatDistanceStrict } from "date-fns";
-import { fr } from "date-fns/locale";
+import { addDays, parseISO, differenceInDays, formatDistanceStrict } from 'date-fns'
+import { fr } from 'date-fns/locale'
 
 export default {
-  name: "ArticleItem",
+  name: 'ArticleItem',
   props: {
     book: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      confirmRenew: false,
-    };
+      confirmRenew: false
+    }
   },
   computed: {
-    ...mapState(useApiStore, ["colorsByUser"]),
-    bookIcon() {
+    ...mapState(useApiStore, ['colorsByUser']),
+    bookIcon () {
       const typeIcons = {
-        _BD12: "far fa-comments",
-        _TEXTP: "fas fa-book",
-        _CDMUS: "fas fa-compact-disc",
-        _FILMTP: "fas fa-film",
-      };
-      return typeIcons[this.book.type] || "folder";
+        _BD12: 'far fa-comments',
+        _TEXTP: 'fas fa-book',
+        _CDMUS: 'fas fa-compact-disc',
+        _FILMTP: 'fas fa-film'
+      }
+      return typeIcons[this.book.type] || 'folder'
     },
-    avatarText() {
+    avatarText () {
       if (!this.book.user || !this.book.user.name) {
-        return "?";
+        return '?'
       }
 
-      return this.book.user.name.slice(0, 1);
+      return this.book.user.name.slice(0, 1)
     },
-    avatarColor() {
-      return this.colorsByUser[this.book.user.id] || "red";
+    avatarColor () {
+      return this.colorsByUser[this.book.user.id] || 'red'
     },
-    statusTextColor() {
+    statusTextColor () {
       return this.daysToDue <= 0
-        ? "text-negative"
+        ? 'text-negative'
         : this.daysToDue < 2
-        ? "text-warning"
-        : "";
+          ? 'text-warning'
+          : ''
     },
-    statusIcon() {
-      return this.canBeRenewed ? "bookmark" : "warning";
+    statusIcon () {
+      return this.canBeRenewed ? 'bookmark' : 'warning'
     },
-    statusColor() {
+    statusColor () {
       return this.daysToDue <= 0
-        ? "negative"
+        ? 'negative'
         : this.daysToDue < 2
-        ? "warning"
-        : "positive";
+          ? 'warning'
+          : 'positive'
     },
-    daysToDue() {
-      return differenceInDays(parseISO(this.book.rendre), new Date());
+    daysToDue () {
+      return differenceInDays(parseISO(this.book.rendre), new Date())
     },
-    statusLabel() {
+    statusLabel () {
       if (this.daysToDue === 0) {
         return 'En retard aujourd\'hui'
       }
 
       return this.daysToDue < 0
         ? `En retard (${Math.abs(this.daysToDue) + 1} jour${
-            this.daysToDue > 0 ? "s" : ""
+            this.daysToDue > 0 ? 's' : ''
           })`
         : this.book.rendre
           ? formatDistanceStrict(addDays(parseISO(this.book.rendre), 1), new Date(), {
-              locale: fr,
-              addSuffix: true,
-              unit: "day",
-            })
+            locale: fr,
+            addSuffix: true,
+            unit: 'day'
+          })
           : '--'
     },
-    canBeRenewed() {
-      return this.book.renewal && this.book.renewal.count < 2;
-    },
+    canBeRenewed () {
+      return this.book.renewal && this.book.renewal.count < 2
+    }
   },
   methods: {
-    ...mapActions(useApiStore, ["renewDocument"]),
-    renewBook() {
-      this.renewDocument(this.book);
+    ...mapActions(useApiStore, ['renewDocument']),
+    renewBook () {
+      this.renewDocument(this.book)
     },
-    confirmRenewBook() {
-      this.confirmRenew = true;
-    },
-  },
-};
+    confirmRenewBook () {
+      this.confirmRenew = true
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

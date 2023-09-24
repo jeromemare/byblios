@@ -28,49 +28,49 @@
 
 <script>
 /* eslint-disable vue/no-unused-components */
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions } from 'pinia'
 
-import { useFavoriteStore } from "../stores/favorite-store";
-import { useSearchStore } from "../stores/search-store";
+import { useFavoriteStore } from '../stores/favorite-store'
+import { useSearchStore } from '../stores/search-store'
 
-import { convert } from "src/services/document-to-card";
+import { convert } from 'src/services/document-to-card'
 
-import SearchDocumentCardFunctional from "src/components/SearchDocumentCardFunctional.vue";
-import SearchDocumentCard from "src/components/SearchDocumentCard.vue";
+import SearchDocumentCardFunctional from 'src/components/SearchDocumentCardFunctional.vue'
+import SearchDocumentCard from 'src/components/SearchDocumentCard.vue'
 
 export default {
-  name: "SearchResultsPanel",
+  name: 'SearchResultsPanel',
   components: {
     SearchDocumentCardFunctional,
-    SearchDocumentCard,
+    SearchDocumentCard
   },
   props: {
     documents: {
       type: Array,
-      required: true,
+      required: true
     },
     query: {
       type: Object,
-      required: true,
+      required: true
     },
     fullMode: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  data() {
+  data () {
     return {
-      internalDocuments: [],
-    };
+      internalDocuments: []
+    }
   },
   computed: {
-    ...mapState(useSearchStore, ["error"]),
-    ...mapState(useFavoriteStore, ["favoriteDocuments"]),
-    documentComponent() {
+    ...mapState(useSearchStore, ['error']),
+    ...mapState(useFavoriteStore, ['favoriteDocuments']),
+    documentComponent () {
       return this.fullMode
-        ? "search-document-card-functional"
-        : "search-document-tile";
-    },
+        ? 'search-document-card-functional'
+        : 'search-document-tile'
+    }
   },
   watch: {
     documents: {
@@ -78,29 +78,29 @@ export default {
       handler: function () {
         const internalDocuments = Object.freeze(
           JSON.parse(JSON.stringify(this.documents))
-        );
+        )
         this.internalDocuments = internalDocuments.map((doc) =>
           convert(this.favoriteDocuments, doc)
-        );
-      },
-    },
+        )
+      }
+    }
   },
   methods: {
-    ...mapActions(useFavoriteStore, ["toggleFavoriteDocument"]),
-    toggleFavorite(document) {
-      this.toggleFavoriteDocument({ document });
+    ...mapActions(useFavoriteStore, ['toggleFavoriteDocument']),
+    toggleFavorite (document) {
+      this.toggleFavoriteDocument({ document })
     },
-    setDisplayForDocumentCard(document, display) {
+    setDisplayForDocumentCard (document, display) {
       this.internalDocuments = this.internalDocuments.map((doc) => {
         if (document.id === doc.id) {
           return {
             ...doc,
-            display,
-          };
+            display
+          }
         }
-        return doc;
-      });
-    },
-  },
-};
+        return doc
+      })
+    }
+  }
+}
 </script>

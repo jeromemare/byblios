@@ -54,73 +54,73 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import { parseISO, compareAsc } from "date-fns";
+import { parseISO, compareAsc } from 'date-fns'
 
-import simplur from "simplur";
+import simplur from 'simplur'
 
-import ArticleItem from "src/components/ArticleItem.vue";
+import ArticleItem from 'src/components/ArticleItem.vue'
 
 export default {
-  name: "PageIndex",
+  name: 'PageIndex',
   components: {
-    ArticleItem,
+    ArticleItem
   },
-  data() {
+  data () {
     return {
       confirmRenew: false,
-      filteredLibrary: null,
-    };
+      filteredLibrary: null
+    }
   },
   computed: {
     ...mapState(useApiStore, [
-      "borrowedBooksCount",
-      "filteredBorrowedBooks",
-      "hasDocumentsToRenew",
-      "isUpdateInProgress",
-      "documentsToRenewCount",
+      'borrowedBooksCount',
+      'filteredBorrowedBooks',
+      'hasDocumentsToRenew',
+      'isUpdateInProgress',
+      'documentsToRenewCount'
     ]),
-    nbDocumentsToRenewLabel() {
-      return simplur`${this.documentsToRenewCount} document[|s]`;
+    nbDocumentsToRenewLabel () {
+      return simplur`${this.documentsToRenewCount} document[|s]`
     },
-    borrowedBooksWithLibraryFilter() {
+    borrowedBooksWithLibraryFilter () {
       return this.filteredBorrowedBooks.filter(
         (book) =>
           !this.filteredLibrary || book.emprunte === this.filteredLibrary
-      );
+      )
     },
-    borrowedBooksSorted() {
+    borrowedBooksSorted () {
       return this.borrowedBooksWithLibraryFilter
         .map((book) => book)
         .sort(({ rendre: rendre1 }, { rendre: rendre2 }) =>
           compareAsc(parseISO(rendre1), parseISO(rendre2))
-        );
+        )
     },
-    borrowedBooksCountLabel() {
+    borrowedBooksCountLabel () {
       if (this.borrowedBooksCount === 1) {
-        return "un document emprunté";
+        return 'un document emprunté'
       }
-      return `${this.borrowedBooksCount} documents empruntés`;
-    },
+      return `${this.borrowedBooksCount} documents empruntés`
+    }
   },
   methods: {
-    ...mapActions(useApiStore, ["renewDocumentsToRenew"]),
+    ...mapActions(useApiStore, ['renewDocumentsToRenew']),
     // Renew all documents that needs and can be renewed
-    renewAllNeeded() {
-      this.confirmRenew = true;
+    renewAllNeeded () {
+      this.confirmRenew = true
     },
-    filterLibrary(library) {
+    filterLibrary (library) {
       if (this.filteredLibrary) {
-        this.filteredLibrary = null;
+        this.filteredLibrary = null
       } else {
-        this.filteredLibrary = library;
+        this.filteredLibrary = library
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

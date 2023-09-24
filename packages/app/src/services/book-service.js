@@ -1,4 +1,4 @@
-import { Platform } from "quasar";
+import { Platform } from 'quasar'
 
 import {
   setBibHost,
@@ -7,70 +7,70 @@ import {
   search as apiSearch,
   prepare as apiPrepare,
   prepareAdvanced as apiPrepareAdvanced,
-  getResults as apiGetResults,
-} from "@byblios/api-toulouse";
+  getResults as apiGetResults
+} from '@byblios/api-toulouse'
 
-import mockData from "../../data/mockData.json";
+import mockData from '../../data/mockData.json'
 
-import addDays from "date-fns/addDays";
+import addDays from 'date-fns/addDays'
 
-async function renewDocuments(documents) {
+async function renewDocuments (documents) {
   if (!Platform.is.nativeMobile) {
-    setBibHost("/bib");
+    setBibHost('/bib')
   }
 
-  return apiRenewDocuments(documents);
+  return apiRenewDocuments(documents)
 }
 
-async function getAccountDetailsForUser(user) {
+async function getAccountDetailsForUser (user) {
   if (!Platform.is.nativeMobile) {
-    setBibHost("/bib");
+    setBibHost('/bib')
   }
 
-  return apiGetAccountDetails(user);
+  return apiGetAccountDetails(user)
 }
 
-async function search(term, limit = 10) {
+async function search (term, limit = 10) {
   if (!Platform.is.nativeMobile) {
-    setBibHost("/bib");
+    setBibHost('/bib')
   }
 
-  return apiSearch(term, limit);
+  return apiSearch(term, limit)
 }
 
-async function prepare(term) {
+async function prepare (term) {
   if (!Platform.is.nativeMobile) {
-    setBibHost("/bib");
+    setBibHost('/bib')
   }
 
-  return apiPrepare(term);
+  return apiPrepare(term)
 }
 
-async function prepareAdvanced(query) {
+async function prepareAdvanced (query) {
   if (!Platform.is.nativeMobile) {
-    setBibHost("/bib");
+    setBibHost('/bib')
   }
 
-  return apiPrepareAdvanced(query);
+  return apiPrepareAdvanced(query)
 }
 
-async function getResults(searchSession, options) {
-  return apiGetResults(searchSession, options);
+async function getResults (searchSession, options) {
+  return apiGetResults(searchSession, options)
 }
 
-async function mockGetData() {
-  const { users, documents } = mockData;
+async function mockGetData () {
+  const { users, documents } = mockData
 
   return {
     users,
     documents: documents.map((document) => {
-      const rendre = addDays(new Date(), document.rendre);
+      const rendre = addDays(new Date(), document.rendre)
       return {
         ...document,
-        rendre,
-      };
-    }),
-  };
+        rendre
+      }
+    })
+  }
 }
 
 export {
@@ -80,5 +80,5 @@ export {
   mockGetData,
   prepare,
   prepareAdvanced,
-  getResults,
-};
+  getResults
+}

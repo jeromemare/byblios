@@ -31,7 +31,7 @@ export async function getSession() {
     }
     return loginFormUrl
   } catch (error) {
-    console.error('err', { error })
+    log(error)
     throw new NotAvailableError('Service non disponible', error)
   }
 }

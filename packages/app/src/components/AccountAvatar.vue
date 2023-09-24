@@ -1,5 +1,9 @@
 <template>
-  <q-avatar :color="avatarColor" text-color="white" :size="size">
+  <q-avatar
+    :color="avatarColor"
+    text-color="white"
+    :size="size"
+  >
     <span class="avatar-text">{{ avatarText }}</span>
     <q-badge
       v-if="badgeLabel !== 0"
@@ -11,64 +15,64 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import { MAX_DOCUMENTS } from "src/services/constants";
+import { MAX_DOCUMENTS } from 'src/services/constants'
 
 export default {
-  name: "AccountAvatar",
+  name: 'AccountAvatar',
   props: {
     user: {
       type: Object,
-      required: true,
+      required: true
     },
     size: {
       type: String,
-      default: "2.6em",
-    },
+      default: '2.6em'
+    }
   },
   computed: {
     ...mapState(useApiStore, [
-      "colorsByUser",
-      "borrowedBooksCountByUser",
-      "lateBooksCountByUser",
-      "hasUserFilterOn",
-      "filteredUsers",
+      'colorsByUser',
+      'borrowedBooksCountByUser',
+      'lateBooksCountByUser',
+      'hasUserFilterOn',
+      'filteredUsers'
     ]),
-    avatarColor() {
+    avatarColor () {
       if (this.hasUserFilterOn && !this.filteredUsers.includes(this.user.id)) {
-        return "blue-grey-4";
+        return 'blue-grey-4'
       }
-      return this.colorsByUser[this.user.id] || "red";
+      return this.colorsByUser[this.user.id] || 'red'
     },
-    avatarText() {
+    avatarText () {
       if (!this.user || !this.user.name) {
-        return "?";
+        return '?'
       }
 
-      return this.user.name.slice(0, 1);
+      return this.user.name.slice(0, 1)
     },
-    borrowedBooksCount() {
-      return this.borrowedBooksCountByUser[this.user.id] || 0;
+    borrowedBooksCount () {
+      return this.borrowedBooksCountByUser[this.user.id] || 0
     },
-    lateBooksCount() {
-      return this.lateBooksCountByUser[this.user.id] || 0;
+    lateBooksCount () {
+      return this.lateBooksCountByUser[this.user.id] || 0
     },
-    badgeLabel() {
+    badgeLabel () {
       return this.lateBooksCount > 0
         ? this.lateBooksCount
-        : this.borrowedBooksCount;
+        : this.borrowedBooksCount
     },
-    badgeColor() {
-      return this.lateBooksCount > 0 ? "negative" : "positive";
+    badgeColor () {
+      return this.lateBooksCount > 0 ? 'negative' : 'positive'
     },
-    leftBooksCount() {
-      return MAX_DOCUMENTS - this.borrowedBooksCount;
-    },
-  },
-};
+    leftBooksCount () {
+      return MAX_DOCUMENTS - this.borrowedBooksCount
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

@@ -64,54 +64,54 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import DevelopperPanel from "src/components/DevelopperPanel.vue";
-import AccountAvatar from "src/components/AccountAvatar.vue";
-import NewAccountForm from "src/components/NewAccountForm.vue";
+import DevelopperPanel from 'src/components/DevelopperPanel.vue'
+import AccountAvatar from 'src/components/AccountAvatar.vue'
+import NewAccountForm from 'src/components/NewAccountForm.vue'
 
 export default {
-  name: "SidebarPanel",
+  name: 'SidebarPanel',
   components: {
     DevelopperPanel,
     AccountAvatar,
-    NewAccountForm,
+    NewAccountForm
   },
   props: {
     detailMode: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  data() {
+  data () {
     return {
       newAccountOpened: false,
-      isDevelopperPanelOpened: false,
-    };
+      isDevelopperPanelOpened: false
+    }
   },
   computed: {
-    ...mapState(useApiStore, ["isUpdateInProgress", "userList", "hasFilter"]),
-    isDev() {
-      return process.env.DEV;
-    },
+    ...mapState(useApiStore, ['isUpdateInProgress', 'userList', 'hasFilter']),
+    isDev () {
+      return process.env.DEV
+    }
   },
   methods: {
-    ...mapActions(useApiStore, ["fetchUsers", "filterUser", "cleanFilter"]),
-    refresh() {
+    ...mapActions(useApiStore, ['fetchUsers', 'filterUser', 'cleanFilter']),
+    refresh () {
       if (!this.isUpdateInProgress) {
-        this.fetchUsers();
+        this.fetchUsers()
       }
     },
-    openDebugPanel() {
-      this.isDevelopperPanelOpened = true;
+    openDebugPanel () {
+      this.isDevelopperPanelOpened = true
     },
-    filterByUser(user) {
-      this.filterUser(user.id);
-    },
-  },
-};
+    filterByUser (user) {
+      this.filterUser(user.id)
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

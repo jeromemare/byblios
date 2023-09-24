@@ -34,62 +34,62 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import addDays from "date-fns/addDays";
-import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
-import parseISO from "date-fns/parseISO";
+import addDays from 'date-fns/addDays'
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
+import parseISO from 'date-fns/parseISO'
 
 export default {
-  name: "ReservationItem",
+  name: 'ReservationItem',
   props: {
     book: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
-    ...mapState(useApiStore, ["colorsByUser"]),
-    avatarText() {
+    ...mapState(useApiStore, ['colorsByUser']),
+    avatarText () {
       if (!this.book.user || !this.book.user.name) {
-        return "?";
+        return '?'
       }
 
-      return this.book.user.name.slice(0, 1);
+      return this.book.user.name.slice(0, 1)
     },
-    avatarColor() {
-      return this.colorsByUser[this.book.user.id] || "red";
+    avatarColor () {
+      return this.colorsByUser[this.book.user.id] || 'red'
     },
-    isAvailable() {
-      return !!this.book.since;
+    isAvailable () {
+      return !!this.book.since
     },
-    nbDaysLeft() {
+    nbDaysLeft () {
       if (!this.book.since) {
-        return undefined;
+        return undefined
       }
 
       return differenceInCalendarDays(
         addDays(parseISO(this.book.since), 10),
         new Date()
-      );
+      )
     },
-    availableSince() {
+    availableSince () {
       if (!this.book.since) {
-        return undefined;
+        return undefined
       }
-      const plural = `${this.nbDaysLeft > 1 ? "s" : ""}`;
-      return `${this.nbDaysLeft} jour${plural} restant${plural}`;
-    },
+      const plural = `${this.nbDaysLeft > 1 ? 's' : ''}`
+      return `${this.nbDaysLeft} jour${plural} restant${plural}`
+    }
   },
   methods: {
-    onRight() {
-      console.log("right");
+    onRight () {
+      console.log('right')
     },
-    onLeft() {
-      console.log("left");
-    },
-  },
-};
+    onLeft () {
+      console.log('left')
+    }
+  }
+}
 </script>

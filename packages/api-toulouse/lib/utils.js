@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
+import debug from 'debug'
 import iso88591 from 'windows-1252'
 import axios from 'axios'
+
+const log = debug('bibtou:utils')
 
 /**
  * Permet de savoir si l'exécution est faite sur NodeJs
@@ -51,7 +54,7 @@ async function requestHtmlPageForNode(options) {
 
 async function requestBrowser(options) {
   if (window.cordova && window.cordova.plugin && window.cordova.plugin.http) {
-    console.log('Use Cordova advanced http')
+    log('Use Cordova advanced http')
     const { url, ...cordovaOptions } = options
     cordovaOptions.method = (cordovaOptions.method || 'get').toLowerCase()
     // prettier-ignore
@@ -77,7 +80,7 @@ async function requestHtmlPageForBrowser(options) {
     const data = await convertBlobToText(blob, 'iso8859-1')
     return data
   } catch (err) {
-    console.log(err)
+    log(err)
   }
 
   return ''

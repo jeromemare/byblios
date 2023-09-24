@@ -60,225 +60,225 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions } from 'pinia'
 
-import { useFavoriteStore } from "../stores/favorite-store";
-import { useApiStore } from "../stores/api-store";
-import { useSearchStore } from "../stores/search-store";
+import { useFavoriteStore } from '../stores/favorite-store'
+import { useApiStore } from '../stores/api-store'
+import { useSearchStore } from '../stores/search-store'
 
-import copy from "copy-to-clipboard";
+import copy from 'copy-to-clipboard'
 
-import compact from "lodash/compact";
+import compact from 'lodash/compact'
 
-import SearchPanel from "src/components/SearchPanel.vue";
-import SearchResultsPanel from "src/components/SearchResultsPanel.vue";
-import SearchSummaryToolbar from "src/components/SearchSummaryToolbar.vue";
-import SearchDocumentTile from "src/components/SearchDocumentTile.vue";
-import SearchDocumentCard from "src/components/SearchDocumentCard.vue";
+import SearchPanel from 'src/components/SearchPanel.vue'
+import SearchResultsPanel from 'src/components/SearchResultsPanel.vue'
+import SearchSummaryToolbar from 'src/components/SearchSummaryToolbar.vue'
+import SearchDocumentTile from 'src/components/SearchDocumentTile.vue'
+import SearchDocumentCard from 'src/components/SearchDocumentCard.vue'
 
 const isCopyAvailable = (copy) => {
   if (!copy) {
-    return false;
+    return false
   }
 
   const unavailableLocalisation = [
-    "Réservé",
-    "Prêté",
-    "Document indisponible, acheminement en cours",
-  ];
+    'Réservé',
+    'Prêté',
+    'Document indisponible, acheminement en cours'
+  ]
   return (
-    copy.availableOn === "" &&
+    copy.availableOn === '' &&
     !unavailableLocalisation.includes(copy.localisation)
-  );
-};
+  )
+}
 
 const hasCopyInLibrary = (library, copy, withAvailability) => {
   if (withAvailability && !isCopyAvailable(copy)) {
-    return false;
+    return false
   }
 
-  return copy.library.toLowerCase().includes(library.toLowerCase());
-};
+  return copy.library.toLowerCase().includes(library.toLowerCase())
+}
 
 const hasAuthor = (text, document) => {
-  const words = text.split(" ").map((word) => word.toLowerCase());
-  const author = document.author.toLowerCase();
-  return words.some((word) => author.includes(word));
-};
+  const words = text.split(' ').map((word) => word.toLowerCase())
+  const author = document.author.toLowerCase()
+  return words.some((word) => author.includes(word))
+}
 
 export default {
-  name: "SearchForm",
+  name: 'SearchForm',
   components: {
     SearchPanel,
     SearchResultsPanel,
     SearchSummaryToolbar,
     SearchDocumentTile,
-    SearchDocumentCard,
+    SearchDocumentCard
   },
-  data() {
+  data () {
     return {
       fullMode: false,
       textFilterMode: false,
-      textFilter: "",
-      tab: "favorites",
+      textFilter: '',
+      tab: 'favorites',
       drawer: false,
       isOpen: false,
       query: {},
       displayResults: false,
-      libraryFilter: "",
+      libraryFilter: '',
       libraryOptions: [
-        "Cyprien",
-        "Cabanis",
-        "Grand M",
-        "Pradette",
-        "Ancely",
-        "Exupery",
+        'Cyprien',
+        'Cabanis',
+        'Grand M',
+        'Pradette',
+        'Ancely',
+        'Exupery'
       ],
       availableFilter: false,
-      authorFilter: false,
-    };
+      authorFilter: false
+    }
   },
   computed: {
-    ...mapState(useApiStore, ["activeSearch"]),
+    ...mapState(useApiStore, ['activeSearch']),
     ...mapState(useSearchStore, [
-      "searchInProgress",
-      "foundDocuments",
-      "foundDocumentsCount",
-      "error",
+      'searchInProgress',
+      'foundDocuments',
+      'foundDocumentsCount',
+      'error'
     ]),
-    ...mapState(useFavoriteStore, ["favoriteDocuments", "favoriteCount"]),
-    favoriteDocumentComponent() {
-      return this.fullMode ? "search-document-card" : "search-document-tile";
+    ...mapState(useFavoriteStore, ['favoriteDocuments', 'favoriteCount']),
+    favoriteDocumentComponent () {
+      return this.fullMode ? 'search-document-card' : 'search-document-tile'
     },
-    viewerModeIcon() {
-      return this.fullMode ? "fullscreen_exit" : "fullscreen";
+    viewerModeIcon () {
+      return this.fullMode ? 'fullscreen_exit' : 'fullscreen'
     },
-    textFilterModeIcon() {
-      return this.textFilterMode ? "cancel_presentation" : "find_in_page";
+    textFilterModeIcon () {
+      return this.textFilterMode ? 'cancel_presentation' : 'find_in_page'
     },
-    isShareAvailable() {
-      return navigator.share;
+    isShareAvailable () {
+      return navigator.share
     },
-    searchProgress() {
+    searchProgress () {
       if (this.foundDocumentsCount === -1) {
-        return 0;
+        return 0
       }
 
-      return this.foundDocuments.length / this.foundDocumentsCount;
+      return this.foundDocuments.length / this.foundDocumentsCount
     },
-    searchInProgressLabel() {
+    searchInProgressLabel () {
       return this.foundDocumentsCount >= 0
         ? `${this.foundDocuments.length} / ${this.foundDocumentsCount} documents`
-        : "Recherche en cours";
+        : 'Recherche en cours'
     },
-    filteredDocuments() {
+    filteredDocuments () {
       const filteredDocuments = this.foundDocuments
         .filter((document) => {
-          const documentCopiesCount = document?.copies?.length ?? 0;
+          const documentCopiesCount = document?.copies?.length ?? 0
           const availableDocument =
-            !this.availableFilter || documentCopiesCount > 0;
+            !this.availableFilter || documentCopiesCount > 0
           const authorFilter =
-            !this.authorFilter || hasAuthor(this.query.text, document);
+            !this.authorFilter || hasAuthor(this.query.text, document)
           const copiesFilter = (compact(document?.copies) ?? []).some(
             (copy) => {
               const copyAvailableFilter =
-                !this.availableFilter || isCopyAvailable(copy);
+                !this.availableFilter || isCopyAvailable(copy)
               const libraryFilter =
                 !this.libraryFilter ||
                 hasCopyInLibrary(
                   this.libraryFilter,
                   copy,
                   this.availableFilter
-                );
-              return copyAvailableFilter && libraryFilter;
+                )
+              return copyAvailableFilter && libraryFilter
             }
-          );
+          )
           return (
             availableDocument &&
             (document?.copies?.length === 0 || copiesFilter) &&
             authorFilter
-          );
+          )
         })
         .filter((document) => {
           if (!this.isTextFilterActivated) {
-            return true;
+            return true
           }
-          const searchText = this.textFilter.toLowerCase();
+          const searchText = this.textFilter.toLowerCase()
           const searchComponents = [
-            document?.author ?? "",
-            document?.title ?? "",
-            document?.summary ?? "",
-          ];
+            document?.author ?? '',
+            document?.title ?? '',
+            document?.summary ?? ''
+          ]
           return searchComponents
             .map((component) => component.toLowerCase())
-            .some((component) => component.includes(searchText));
-        });
-      return Object.freeze(filteredDocuments);
+            .some((component) => component.includes(searchText))
+        })
+      return Object.freeze(filteredDocuments)
     },
-    isTextFilterActivated() {
-      return this.textFilterMode;
-    },
+    isTextFilterActivated () {
+      return this.textFilterMode
+    }
   },
   watch: {
     activeSearch: {
       immediate: true,
       handler: function () {
-        this.isOpen = this.activeSearch;
-      },
-    },
+        this.isOpen = this.activeSearch
+      }
+    }
   },
   methods: {
-    ...mapActions(useApiStore, ["closeSearch"]),
-    ...mapActions(useSearchStore, ["search", "clearSearch"]),
-    toggleTextFilterMode() {
-      this.textFilterMode = !this.textFilterMode;
+    ...mapActions(useApiStore, ['closeSearch']),
+    ...mapActions(useSearchStore, ['search', 'clearSearch']),
+    toggleTextFilterMode () {
+      this.textFilterMode = !this.textFilterMode
     },
-    toggleVueMode() {
-      this.fullMode = !this.fullMode;
+    toggleVueMode () {
+      this.fullMode = !this.fullMode
     },
-    async share() {
+    async share () {
       const text = this.favoriteDocuments
         .map(
           (document) => `
           ${document.title} - ${document.author}
-          ${document.id ?? ""} - ISBN: ${document.isbn ?? ""}`
+          ${document.id ?? ''} - ISBN: ${document.isbn ?? ''}`
         )
-        .join("\n");
+        .join('\n')
 
       if (navigator.share) {
         try {
           await navigator.share({
-            title: "Documents favoris",
-            text,
-          });
-          console.log("Partage avec succès");
+            title: 'Documents favoris',
+            text
+          })
+          console.log('Partage avec succès')
         } catch (error) {
-          console.error("Erreur de partage", error);
+          console.error('Erreur de partage', error)
         }
       }
     },
-    async toClipboard() {
+    async toClipboard () {
       const text = this.favoriteDocuments
         .map(
           (document) => `
           ${document.title} - ${document.author}
-          ${document.id ?? ""} - ISBN: ${document.isbn ?? ""}`
+          ${document.id ?? ''} - ISBN: ${document.isbn ?? ''}`
         )
-        .join("\n");
+        .join('\n')
       copy(text, {
         debug: true,
-        message: "Press #{key} to copy",
-      });
+        message: 'Press #{key} to copy'
+      })
     },
-    async launchSearch(query) {
-      this.displayResults = true;
-      this.query = query;
-      await this.search({ query });
+    async launchSearch (query) {
+      this.displayResults = true
+      this.query = query
+      await this.search({ query })
     },
-    back() {
-      this.displayResults = false;
-      this.clearSearch();
-    },
-  },
-};
+    back () {
+      this.displayResults = false
+      this.clearSearch()
+    }
+  }
+}
 </script>

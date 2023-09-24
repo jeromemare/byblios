@@ -19,16 +19,16 @@
 
 <script>
 export default {
-  name: "BookCard",
+  name: 'BookCard',
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     author: {
       type: String,
-      required: true,
-    },
-  },
-};
+      required: true
+    }
+  }
+}
 </script>

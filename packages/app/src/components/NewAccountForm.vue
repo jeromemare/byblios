@@ -36,31 +36,31 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
+import { mapActions } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
 export default {
-  name: "NewAccountForm",
-  data() {
+  name: 'NewAccountForm',
+  data () {
     return {
-      id: "",
-      name: "",
-      pin: "",
-    };
+      id: '',
+      name: '',
+      pin: ''
+    }
   },
   computed: {
-    newUser() {
+    newUser () {
       return {
         id: this.id,
         name: this.name,
         pin: this.pin,
-        color: "blue",
-      };
-    },
+        color: 'blue'
+      }
+    }
   },
   methods: {
-    ...mapActions(useApiStore, ["addUser"]),
-  },
-};
+    ...mapActions(useApiStore, ['addUser'])
+  }
+}
 </script>

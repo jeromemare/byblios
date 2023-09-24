@@ -34,117 +34,117 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import { mapState } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import fr from "date-fns/locale/fr";
-import parse from "date-fns/parse";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import isBefore from "date-fns/isBefore";
-import differenceInDays from "date-fns/differenceInDays";
+import fr from 'date-fns/locale/fr'
+import parse from 'date-fns/parse'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import isBefore from 'date-fns/isBefore'
+import differenceInDays from 'date-fns/differenceInDays'
 
-import BarcodeDisplay from "src/components/BarcodeDisplay.vue";
-import { MAX_DOCUMENTS } from "src/services/constants";
+import BarcodeDisplay from 'src/components/BarcodeDisplay.vue'
+import { MAX_DOCUMENTS } from 'src/services/constants'
 
 export default {
-  name: "AccountItem",
+  name: 'AccountItem',
   components: {
-    BarcodeDisplay,
+    BarcodeDisplay
   },
   props: {
     user: {
       type: Object,
       required: true,
       validator: (user) => {
-        return !!(user.name && user.id && user.pin);
-      },
-    },
+        return !!(user.name && user.id && user.pin)
+      }
+    }
   },
-  data() {
+  data () {
     return {
-      timer: undefined,
-    };
+      timer: undefined
+    }
   },
   computed: {
     ...mapState(useApiStore, [
-      "borrowedBooksCountByUser",
-      "lateBooksCountByUser",
+      'borrowedBooksCountByUser',
+      'lateBooksCountByUser'
     ]),
-    leftBooksLabel() {
+    leftBooksLabel () {
       if (this.lateBooksCount > 0) {
         return `${this.lateBooksCount} document${
-          this.lateBooksCount > 1 ? "s" : ""
-        } en retard`;
+          this.lateBooksCount > 1 ? 's' : ''
+        } en retard`
       } else if (this.leftBookCount === 0) {
-        return "Aucun emprunt possible";
+        return 'Aucun emprunt possible'
       } else if (this.leftBookCount === 1) {
-        return "Un emprunt restant";
+        return 'Un emprunt restant'
       }
-      return `${MAX_DOCUMENTS - this.borrowedBooksCount} emprunts restants`;
+      return `${MAX_DOCUMENTS - this.borrowedBooksCount} emprunts restants`
     },
-    leftBookColor() {
+    leftBookColor () {
       if (this.lateBooksCount > 0) {
-        return "text-negative";
+        return 'text-negative'
       } else if (this.leftBookCount === 0) {
-        return "text-warning";
+        return 'text-warning'
       }
 
-      return "";
+      return ''
     },
-    userAvatarLabel() {
-      return this.user.name.slice(0, 1);
+    userAvatarLabel () {
+      return this.user.name.slice(0, 1)
     },
-    borrowedBooksCount() {
-      return this.borrowedBooksCountByUser[this.user.id] || 0;
+    borrowedBooksCount () {
+      return this.borrowedBooksCountByUser[this.user.id] || 0
     },
-    lateBooksCount() {
-      return this.lateBooksCountByUser[this.user.id] || 0;
+    lateBooksCount () {
+      return this.lateBooksCountByUser[this.user.id] || 0
     },
-    avatarColor() {
-      return this.user.color || "blue";
+    avatarColor () {
+      return this.user.color || 'blue'
     },
-    statusColor() {
+    statusColor () {
       return this.lateBooksCount > 0
-        ? "negative"
+        ? 'negative'
         : this.leftBookCount === 0
-        ? "positive"
-        : "positive";
+          ? 'positive'
+          : 'positive'
     },
-    leftBookCount() {
-      return MAX_DOCUMENTS - this.borrowedBooksCount;
+    leftBookCount () {
+      return MAX_DOCUMENTS - this.borrowedBooksCount
     },
-    statusCount() {
-      return this.lateBooksCount > 0 ? this.lateBooksCount : this.leftBookCount;
+    statusCount () {
+      return this.lateBooksCount > 0 ? this.lateBooksCount : this.leftBookCount
     },
-    expirationDate() {
-      const date = this.user.info && this.user.info.expirationDate;
-      return date && parse(date, "d/M/yyyy", new Date());
+    expirationDate () {
+      const date = this.user.info && this.user.info.expirationDate
+      return date && parse(date, 'd/M/yyyy', new Date())
     },
-    isAccountExpired() {
-      return isBefore(this.expirationDate, new Date());
+    isAccountExpired () {
+      return isBefore(this.expirationDate, new Date())
     },
-    isAccountAboutToExpire() {
+    isAccountAboutToExpire () {
       const daysToExpiration = differenceInDays(
         this.expirationDate,
         new Date()
-      );
-      return daysToExpiration > 0 && daysToExpiration < 15;
+      )
+      return daysToExpiration > 0 && daysToExpiration < 15
     },
-    expirationPreLabel() {
-      return this.isAccountExpired ? "a expiré" : "expire";
+    expirationPreLabel () {
+      return this.isAccountExpired ? 'a expiré' : 'expire'
     },
-    expirationDateForHuman() {
+    expirationDateForHuman () {
       if (this.expirationDate) {
         return formatDistanceToNow(this.expirationDate, {
           addSuffix: true,
-          locale: fr,
-        });
+          locale: fr
+        })
       }
-      return "--";
-    },
-  },
-};
+      return '--'
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

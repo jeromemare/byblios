@@ -34,24 +34,24 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
+import { mapActions } from 'pinia'
 
-import { useApiStore } from "../stores/api-store";
+import { useApiStore } from '../stores/api-store'
 
-import NewAccountForm from "src/components/NewAccountForm.vue";
+import NewAccountForm from 'src/components/NewAccountForm.vue'
 
 export default {
-  name: "AccountsLayout",
+  name: 'AccountsLayout',
   components: {
-    NewAccountForm,
+    NewAccountForm
   },
-  data() {
+  data () {
     return {
-      newAccountOpened: false,
-    };
+      newAccountOpened: false
+    }
   },
   methods: {
-    ...mapActions(useApiStore, ["mockUsers"]),
-  },
-};
+    ...mapActions(useApiStore, ['mockUsers'])
+  }
+}
 </script>

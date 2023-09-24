@@ -1,25 +1,25 @@
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from 'lodash/cloneDeep'
 
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
 import {
   prepareAdvanced,
   prepare,
-  getResults,
-} from "src/services/book-service";
+  getResults
+} from 'src/services/book-service'
 
-export const useSearchStore = defineStore("search", {
+export const useSearchStore = defineStore('search', {
   persist: false,
   state: () => ({
     filters: {
       available: {
         active: false,
-        value: false,
+        value: false
       },
       libraries: {
         active: false,
-        value: [],
-      },
+        value: []
+      }
     },
     searchResultsAvailable: false,
     searchInProgress: false,
@@ -34,54 +34,54 @@ export const useSearchStore = defineStore("search", {
     // Requête de la recherche
     query: {},
     // Erreur de recherche
-    error: "",
+    error: ''
   }),
   getters: {},
   actions: {
-    cleanSearch() {
-      this.foundDocuments = [];
-      this.foundDocumentsCount = -1;
-      this.searchInProgress = true;
-      this.searchResultsAvailable = true;
-      this.error = "";
+    cleanSearch () {
+      this.foundDocuments = []
+      this.foundDocumentsCount = -1
+      this.searchInProgress = true
+      this.searchResultsAvailable = true
+      this.error = ''
     },
-    async search({ query }) {
+    async search ({ query }) {
       if (!query) {
-        return;
+        return
       }
 
-      this.query = cloneDeep(query);
+      this.query = cloneDeep(query)
 
       try {
-        this.cleanSearch();
-        let searchSession;
+        this.cleanSearch()
+        let searchSession
         if (query.location) {
-          query.sortByFilter = "-PBYR";
-          searchSession = await prepareAdvanced(query);
+          query.sortByFilter = '-PBYR'
+          searchSession = await prepareAdvanced(query)
         } else {
-          searchSession = await prepare(query.text);
+          searchSession = await prepare(query.text)
         }
-        this.foundDocumentsCount = searchSession.count;
+        this.foundDocumentsCount = searchSession.count
         await getResults(searchSession, {
           addDocument: (document) => {
-            this.foundDocuments.push(document);
-          },
-        });
+            this.foundDocuments.push(document)
+          }
+        })
       } catch (error) {
-        this.error = error.message;
+        this.error = error.message
         console.error(
           `Erreur pendant la recherche ${query.text} - ${error.message}`
-        );
+        )
       } finally {
-        this.searchInProgress = false;
+        this.searchInProgress = false
       }
     },
-    async clearSearch() {
-      this.foundDocuments = [];
-      this.foundDocumentsCount = -1;
-      this.searchInProgress = false;
-      this.error = "";
-      this.searchResultsAvailable = false;
-    },
-  },
-});
+    async clearSearch () {
+      this.foundDocuments = []
+      this.foundDocumentsCount = -1
+      this.searchInProgress = false
+      this.error = ''
+      this.searchResultsAvailable = false
+    }
+  }
+})

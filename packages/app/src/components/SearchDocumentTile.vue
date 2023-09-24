@@ -51,70 +51,70 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
+import { mapActions } from 'pinia'
 
-import { useFavoriteStore } from "../stores/favorite-store";
+import { useFavoriteStore } from '../stores/favorite-store'
 
-import compact from "lodash/compact";
+import compact from 'lodash/compact'
 
 const isCopyAvailable = (copy) => {
   if (!copy) {
-    return false;
+    return false
   }
 
   const unavailableLocalisation = [
-    "Réservé",
-    "Prêté",
-    "Document indisponible, acheminement en cours",
-  ];
+    'Réservé',
+    'Prêté',
+    'Document indisponible, acheminement en cours'
+  ]
   return (
-    copy.availableOn === "" &&
+    copy.availableOn === '' &&
     !unavailableLocalisation.includes(copy.localisation)
-  );
-};
-const isCopyUnavailable = (copy) => !isCopyAvailable(copy);
+  )
+}
+const isCopyUnavailable = (copy) => !isCopyAvailable(copy)
 
 const typeToIcon = {
-  livre: "fas fa-book",
-  dvd: "fas fa-film",
-  "audio-livre": "far fa-file-audio",
-};
+  livre: 'fas fa-book',
+  dvd: 'fas fa-film',
+  'audio-livre': 'far fa-file-audio'
+}
 
 export default {
-  name: "SearchDocumentTile",
+  name: 'SearchDocumentTile',
   props: {
     document: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
-    typeIcon() {
-      return typeToIcon?.[this.document.type] ?? "mdi-help-rhombus-outline";
+    typeIcon () {
+      return typeToIcon?.[this.document.type] ?? 'mdi-help-rhombus-outline'
     },
-    available() {
-      return (this.document?.copies ?? []).some(isCopyAvailable);
+    available () {
+      return (this.document?.copies ?? []).some(isCopyAvailable)
     },
-    availablesInLibraries() {
-      return this.availablesCopies.map((copy) => copy.library).join(", ");
+    availablesInLibraries () {
+      return this.availablesCopies.map((copy) => copy.library).join(', ')
     },
-    availabilityColor() {
-      return this.available ? "green" : "red";
+    availabilityColor () {
+      return this.available ? 'green' : 'red'
     },
-    availablesCopies() {
-      return (compact(this.document?.copies) ?? []).filter(isCopyAvailable);
+    availablesCopies () {
+      return (compact(this.document?.copies) ?? []).filter(isCopyAvailable)
     },
-    unavailablesCopies() {
-      return (compact(this.document?.copies) ?? []).filter(isCopyUnavailable);
-    },
+    unavailablesCopies () {
+      return (compact(this.document?.copies) ?? []).filter(isCopyUnavailable)
+    }
   },
   methods: {
-    ...mapActions(useFavoriteStore, ["toggleFavoriteDocument"]),
-    toggleFavorite() {
-      this.toggleFavoriteDocument({ document: this.document });
-    },
-  },
-};
+    ...mapActions(useFavoriteStore, ['toggleFavoriteDocument']),
+    toggleFavorite () {
+      this.toggleFavoriteDocument({ document: this.document })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
